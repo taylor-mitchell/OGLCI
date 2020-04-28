@@ -1,0 +1,67 @@
+﻿  Compiling CUDA source file kernel.cu...
+  
+  C:\development\OGLCI\OGLCI\TheArena>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\bin\nvcc.exe" -gencode=arch=compute_30,code=\"sm_30,compute_30\" --use-local-env -ccbin "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\bin\HostX86\x64" -x cu  -I"C:\development\OGLCI\OGLCI\../external-libraries/boost_1_73_0" -IC:\development\OGLCI\OGLCI\/Legos/include -I"C:\development\OGLCI\OGLCI\../external-libraries/glfw-3.3.2/include" -I"C:\development\OGLCI\OGLCI\../external-libraries/glew-2.1.0/include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\include"  -G   --keep-dir x64\Debug -maxrregcount=0  --machine 64 --compile -cudart static  -g   -DWIN32 -DWIN64 -D_DEBUG -D_CONSOLE -D_MBCS -Xcompiler "/EHsc /W3 /nologo /Od /Fdx64\Debug\vc142.pdb /FS /Zi /RTC1 /MDd " -o x64\Debug\kernel.cu.obj "C:\development\OGLCI\OGLCI\TheArena\kernel.cu" 
+  kernel.cu
+Legos.lib(attribute_set.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in kernel.cu.obj
+Legos.lib(attribute_set.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in kernel.cu.obj
+Legos.lib(core.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in kernel.cu.obj
+Legos.lib(core.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in kernel.cu.obj
+Legos.lib(default_attribute_names.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in kernel.cu.obj
+Legos.lib(default_attribute_names.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in kernel.cu.obj
+Legos.lib(global_logger_storage.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in kernel.cu.obj
+Legos.lib(global_logger_storage.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in kernel.cu.obj
+Legos.lib(severity_level.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in kernel.cu.obj
+Legos.lib(severity_level.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in kernel.cu.obj
+Legos.lib(record_ostream.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in kernel.cu.obj
+Legos.lib(record_ostream.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in kernel.cu.obj
+Legos.lib(attribute_value_set.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in kernel.cu.obj
+Legos.lib(attribute_value_set.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in kernel.cu.obj
+Legos.lib(thread_id.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in kernel.cu.obj
+Legos.lib(thread_id.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in kernel.cu.obj
+Legos.lib(default_sink.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in kernel.cu.obj
+Legos.lib(default_sink.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in kernel.cu.obj
+Legos.lib(attribute_name.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in kernel.cu.obj
+Legos.lib(attribute_name.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in kernel.cu.obj
+Legos.lib(exceptions.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in kernel.cu.obj
+Legos.lib(exceptions.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in kernel.cu.obj
+Legos.lib(thread_specific.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in kernel.cu.obj
+Legos.lib(thread_specific.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in kernel.cu.obj
+Legos.lib(code_conversion.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in kernel.cu.obj
+Legos.lib(code_conversion.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in kernel.cu.obj
+Legos.lib(trivial.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in kernel.cu.obj
+Legos.lib(trivial.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in kernel.cu.obj
+Legos.lib(process_id.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in kernel.cu.obj
+Legos.lib(process_id.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in kernel.cu.obj
+Legos.lib(text_file_backend.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in kernel.cu.obj
+Legos.lib(text_file_backend.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in kernel.cu.obj
+Legos.lib(date_time_format_parser.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in kernel.cu.obj
+Legos.lib(date_time_format_parser.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in kernel.cu.obj
+Legos.lib(text_ostream_backend.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in kernel.cu.obj
+Legos.lib(text_ostream_backend.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in kernel.cu.obj
+Legos.lib(dump.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in kernel.cu.obj
+Legos.lib(dump.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in kernel.cu.obj
+Legos.lib(dump_ssse3.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in kernel.cu.obj
+Legos.lib(dump_ssse3.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in kernel.cu.obj
+Legos.lib(dump_avx2.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in kernel.cu.obj
+Legos.lib(dump_avx2.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in kernel.cu.obj
+     Creating library C:\development\OGLCI\OGLCI\x64\Debug\TheArena.lib and object C:\development\OGLCI\OGLCI\x64\Debug\TheArena.exp
+LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+LINK : warning LNK4286: symbol '__glewAttachShader' defined in 'Legos.lib(glew.obj)' is imported by 'Legos.lib(Shader.obj)'
+LINK : warning LNK4286: symbol '__glewBindAttribLocation' defined in 'Legos.lib(glew.obj)' is imported by 'Legos.lib(Shader.obj)'
+LINK : warning LNK4286: symbol '__glewCompileShader' defined in 'Legos.lib(glew.obj)' is imported by 'Legos.lib(Shader.obj)'
+LINK : warning LNK4286: symbol '__glewCreateProgram' defined in 'Legos.lib(glew.obj)' is imported by 'Legos.lib(Shader.obj)'
+LINK : warning LNK4286: symbol '__glewCreateShader' defined in 'Legos.lib(glew.obj)' is imported by 'Legos.lib(Shader.obj)'
+LINK : warning LNK4286: symbol '__glewDeleteProgram' defined in 'Legos.lib(glew.obj)' is imported by 'Legos.lib(Shader.obj)'
+LINK : warning LNK4286: symbol '__glewDeleteShader' defined in 'Legos.lib(glew.obj)' is imported by 'Legos.lib(Shader.obj)'
+LINK : warning LNK4286: symbol '__glewDetachShader' defined in 'Legos.lib(glew.obj)' is imported by 'Legos.lib(Shader.obj)'
+LINK : warning LNK4286: symbol '__glewGetProgramInfoLog' defined in 'Legos.lib(glew.obj)' is imported by 'Legos.lib(Shader.obj)'
+LINK : warning LNK4286: symbol '__glewGetProgramiv' defined in 'Legos.lib(glew.obj)' is imported by 'Legos.lib(Shader.obj)'
+LINK : warning LNK4286: symbol '__glewGetShaderInfoLog' defined in 'Legos.lib(glew.obj)' is imported by 'Legos.lib(Shader.obj)'
+LINK : warning LNK4286: symbol '__glewGetShaderiv' defined in 'Legos.lib(glew.obj)' is imported by 'Legos.lib(Shader.obj)'
+LINK : warning LNK4286: symbol '__glewGetUniformLocation' defined in 'Legos.lib(glew.obj)' is imported by 'Legos.lib(Shader.obj)'
+LINK : warning LNK4286: symbol '__glewLinkProgram' defined in 'Legos.lib(glew.obj)' is imported by 'Legos.lib(Shader.obj)'
+LINK : warning LNK4286: symbol '__glewShaderSource' defined in 'Legos.lib(glew.obj)' is imported by 'Legos.lib(Shader.obj)'
+LINK : warning LNK4286: symbol '__glewUseProgram' defined in 'Legos.lib(glew.obj)' is imported by 'Legos.lib(Shader.obj)'
+LINK : warning LNK4286: symbol '__glewValidateProgram' defined in 'Legos.lib(glew.obj)' is imported by 'Legos.lib(Shader.obj)'
+C:\development\OGLCI\OGLCI\x64\Debug\TheArena.exe : fatal error LNK1319: 42 mismatches detected

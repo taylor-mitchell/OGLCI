@@ -1,0 +1,12 @@
+
+"bin.v2\libs\serialization\build\msvc-14.2\release\address-model-64\link-static\threading-multi\basic_text_wiprimitive.obj" 
+"bin.v2\libs\serialization\build\msvc-14.2\release\address-model-64\link-static\threading-multi\basic_text_woprimitive.obj" 
+"bin.v2\libs\serialization\build\msvc-14.2\release\address-model-64\link-static\threading-multi\text_wiarchive.obj" 
+"bin.v2\libs\serialization\build\msvc-14.2\release\address-model-64\link-static\threading-multi\text_woarchive.obj" 
+"bin.v2\libs\serialization\build\msvc-14.2\release\address-model-64\link-static\threading-multi\polymorphic_text_wiarchive.obj" 
+"bin.v2\libs\serialization\build\msvc-14.2\release\address-model-64\link-static\threading-multi\polymorphic_text_woarchive.obj" 
+"bin.v2\libs\serialization\build\msvc-14.2\release\address-model-64\link-static\threading-multi\xml_wgrammar.obj" 
+"bin.v2\libs\serialization\build\msvc-14.2\release\address-model-64\link-static\threading-multi\xml_wiarchive.obj" 
+"bin.v2\libs\serialization\build\msvc-14.2\release\address-model-64\link-static\threading-multi\xml_woarchive.obj" 
+"bin.v2\libs\serialization\build\msvc-14.2\release\address-model-64\link-static\threading-multi\polymorphic_xml_wiarchive.obj" 
+"bin.v2\libs\serialization\build\msvc-14.2\release\address-model-64\link-static\threading-multi\polymorphic_xml_woarchive.obj"   

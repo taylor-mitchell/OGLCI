@@ -1,0 +1,6 @@
+
+"bin.v2\libs\thread\build\msvc-14.2\release\address-model-64\link-static\threadapi-win32\threading-multi\win32\thread.obj" 
+"bin.v2\libs\thread\build\msvc-14.2\release\address-model-64\link-static\threadapi-win32\threading-multi\win32\tss_dll.obj" 
+"bin.v2\libs\thread\build\msvc-14.2\release\address-model-64\link-static\threadapi-win32\threading-multi\win32\tss_pe.obj" 
+"bin.v2\libs\thread\build\msvc-14.2\release\address-model-64\link-static\threadapi-win32\threading-multi\win32\thread_primitives.obj" 
+"bin.v2\libs\thread\build\msvc-14.2\release\address-model-64\link-static\threadapi-win32\threading-multi\future.obj"   

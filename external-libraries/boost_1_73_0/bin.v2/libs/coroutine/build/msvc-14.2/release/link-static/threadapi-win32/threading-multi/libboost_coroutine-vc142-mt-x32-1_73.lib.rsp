@@ -1,0 +1,4 @@
+
+"bin.v2\libs\coroutine\build\msvc-14.2\release\link-static\threadapi-win32\threading-multi\detail\coroutine_context.obj" 
+"bin.v2\libs\coroutine\build\msvc-14.2\release\link-static\threadapi-win32\threading-multi\exceptions.obj" 
+"bin.v2\libs\coroutine\build\msvc-14.2\release\link-static\threadapi-win32\threading-multi\windows\stack_traits.obj"   

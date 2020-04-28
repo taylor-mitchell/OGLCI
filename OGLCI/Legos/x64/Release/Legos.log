@@ -1,0 +1,3 @@
+﻿  Shader.cpp
+C:\development\OGLCI\OGLCI\Legos\OpenGL\Shader\Shader.cpp(131,28): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  Legos.vcxproj -> C:\development\OGLCI\OGLCI\x64\Release\Legos.lib

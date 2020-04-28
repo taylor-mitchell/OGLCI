@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Interop">
+      <UniqueIdentifier>{b43239a6-8b18-4bb6-9acb-2819b8fe7687}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interop\Buffers">
+      <UniqueIdentifier>{baa3061c-12fc-49fd-8cce-8d5b6d5e6fe5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interop\Buffers\Buffer">
+      <UniqueIdentifier>{b6eb0f12-78d4-4f22-a630-764678716382}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL">
+      <UniqueIdentifier>{0faf03a8-e1b6-4038-b912-75738f3153e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Camera">
+      <UniqueIdentifier>{ac216108-da6e-4f49-b261-0021cc268b0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Shader">
+      <UniqueIdentifier>{7b70c8ea-999b-4f67-90f7-021d42c063de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Transform">
+      <UniqueIdentifier>{3ee3f67c-de31-413c-95d1-70ce263d08cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utitlity">
+      <UniqueIdentifier>{82f672d8-ec60-4906-a8d4-2524ba67b5d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utitlity\Logger">
+      <UniqueIdentifier>{243462cc-c3cd-44f3-ad72-78f11b7bc193}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="InteropClasses\Buffers\Buffer.cpp">
+      <Filter>Interop\Buffers\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Camera.cpp">
+      <Filter>OpenGL\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Shader\Shader.cpp">
+      <Filter>OpenGL\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Transform\Transform.cpp">
+      <Filter>OpenGL\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\Logger\Logger.cpp">
+      <Filter>Utitlity\Logger</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Logger.h">
+      <Filter>Utitlity\Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Buffer.h">
+      <Filter>Interop\Buffers\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Camera.h">
+      <Filter>OpenGL\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Transform.h">
+      <Filter>OpenGL\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Shader.h">
+      <Filter>OpenGL\Shader</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,8 @@
+﻿  Buffer.cpp
+  Camera.cpp
+  Shader.cpp
+C:\development\OGLCI\OGLCI\Legos\OpenGL\Shader\Shader.cpp(131,28): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  Transform.cpp
+  Logger.cpp
+  Generating Code...
+  Legos.vcxproj -> C:\development\OGLCI\OGLCI\x64\Debug\Legos.lib
