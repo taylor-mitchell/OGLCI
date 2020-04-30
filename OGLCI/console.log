@@ -1,1 +1,7 @@
-[2020-04-28 15:13:17.300286] <info>: 4.6.0 NVIDIA 441.22
+[2020-04-29 19:12:49.335971] <info>: creating window...
+[2020-04-29 19:12:49.676078] <info>: window created
+[2020-04-29 19:12:49.679069] <info>: 4.6.0 NVIDIA 441.22
+[2020-04-29 19:12:49.679069] <info>: loading shaders...
+[2020-04-29 19:12:49.683059] <info>: shaders loaded
+[2020-04-29 19:12:49.683059] <info>: beginning main loop
+[2020-04-29 19:12:50.591151] <info>: shutting down

@@ -54,6 +54,7 @@
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>libboost_log-vc142-mt-x64-1_73.lib;Legos.lib;cudart_static.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)../external-libraries/boost_1_73_0/stage/lib;$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)../external-libraries/glfw-3.3.2/lib-vc2019;$(SolutionDir)../external-libraries/glew-2.1.0/lib/Release/x64;%(AdditionalLibraryDirectories);$(CudaToolkitLibDir)</AdditionalLibraryDirectories>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <CudaCompile>
       <TargetMachinePlatform>64</TargetMachinePlatform>
@@ -75,6 +76,7 @@
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>libboost_log-vc142-mt-x64-1_73.lib;Legos.lib;cudart_static.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)../external-libraries/boost_1_73_0/stage/lib;$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)../external-libraries/glfw-3.3.2/lib-vc2019;$(SolutionDir)../external-libraries/glew-2.1.0/lib/Release/x64;%(AdditionalLibraryDirectories);$(CudaToolkitLibDir)</AdditionalLibraryDirectories>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <CudaCompile>
       <TargetMachinePlatform>64</TargetMachinePlatform>

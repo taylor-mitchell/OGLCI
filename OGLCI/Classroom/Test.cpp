@@ -4,7 +4,6 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "Shader.h"
-#include "Logger.h"
 
 TEST_CASE("INIT", "[core]")
 {

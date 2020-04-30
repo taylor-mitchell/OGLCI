@@ -77,14 +77,14 @@ std::string Shader::loadShader(const std::string& filename)
 	}
 	else
 	{
-		ERROR("Unable to load shader: " + filename);
+		ERROR("Unable to open shader file: " + filename);
 		error = 1;
 	}
 
 	return output;
 }
 
-bool Shader::checkShaderError(GLuint shader, GLuint flag, bool isProgram, const std::string& errorMessage)
+bool Shader::checkShaderError(unsigned int shader, unsigned int flag, bool isProgram, const std::string& errorMessage)
 {
 	int success = 0;
 	char errorString[1024] = { 0 };
@@ -128,7 +128,7 @@ unsigned int Shader::createShader(const std::string& text, unsigned int type)
 	const char* p[1];
 	p[0] = text.c_str();
 	int lengths[1];
-	lengths[0] = text.length();
+	lengths[0] = static_cast<int>(text.length());
 
 	glShaderSource(shader, 1, p, lengths);
 	glCompileShader(shader);
