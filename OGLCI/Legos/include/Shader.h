@@ -37,6 +37,7 @@ public:
 	void bind();
 	void update(const Transform& transform);
 	unsigned int getError() { return error;	};
+	unsigned int getProgram() { return programHandle; };
 };
 
 

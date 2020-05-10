@@ -28,6 +28,27 @@
     <Filter Include="Utitlity\Logger">
       <UniqueIdentifier>{243462cc-c3cd-44f3-ad72-78f11b7bc193}</UniqueIdentifier>
     </Filter>
+    <Filter Include="OpenGL\Buffers">
+      <UniqueIdentifier>{99f8dd46-e41a-406b-81c6-e8aebd4099b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Renderer">
+      <UniqueIdentifier>{a9b1f5b0-7ad2-4fe9-828f-500319f62802}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\ErrorCheckers">
+      <UniqueIdentifier>{596b6841-e82b-4133-86b5-f8b832fe1254}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Buffers\VertexBuffer">
+      <UniqueIdentifier>{33f65ddf-a29b-4643-98ce-2cbbac41dd4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Buffers\IndexBuffer">
+      <UniqueIdentifier>{ac722b30-252d-4970-a3c2-4b9742ceddf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Buffers\VertexArray">
+      <UniqueIdentifier>{6e629bfd-8c16-4a92-ad6a-3e7e9c944cf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Buffers\VertexBufferLayout">
+      <UniqueIdentifier>{6b637cd5-e55f-4265-8b4b-ddc62e45965e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InteropClasses\Buffers\Buffer.cpp">
@@ -45,6 +66,15 @@
     <ClCompile Include="Utility\Logger\Logger.cpp">
       <Filter>Utitlity\Logger</Filter>
     </ClCompile>
+    <ClCompile Include="OpenGL\Buffers\VertexBuffer\VertexBuffer.cpp">
+      <Filter>OpenGL\Buffers\VertexBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Buffers\IndexBuffer\IndexBuffer.cpp">
+      <Filter>OpenGL\Buffers\IndexBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Buffers\VertexArray\VertexArray.cpp">
+      <Filter>OpenGL\Buffers\VertexArray</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Logger.h">
@@ -61,6 +91,24 @@
     </ClInclude>
     <ClInclude Include="include\Shader.h">
       <Filter>OpenGL\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ErrorChecking.h">
+      <Filter>OpenGL\ErrorCheckers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Renderer.h">
+      <Filter>OpenGL\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\VertexBuffer.h">
+      <Filter>OpenGL\Buffers\VertexBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IndexBuffer.h">
+      <Filter>OpenGL\Buffers\IndexBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\VertexArray.h">
+      <Filter>OpenGL\Buffers\VertexArray</Filter>
+    </ClInclude>
+    <ClInclude Include="include\VertexBufferLayout.h">
+      <Filter>OpenGL\Buffers\VertexBufferLayout</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

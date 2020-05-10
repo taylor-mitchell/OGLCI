@@ -9,7 +9,8 @@
 
 #define INFO(X)  BOOST_LOG_SEV(my_logger::get(), boost::log::trivial::info) << X
 #define WARN(X)  BOOST_LOG_SEV(my_logger::get(), boost::log::trivial::warning) << X
-#define ERROR(X) BOOST_LOG_SEV(my_logger::get(), boost::log::trivial::error) << X
+#define ERRORLOC(X,Y,Z,A) BOOST_LOG_SEV(my_logger::get(), boost::log::trivial::error) << X << " " << Y << " - " << Z << ": " << A
+#define ERROR(X) BOOST_LOG_SEV(my_logger::get(), boost::log::trivial::error) << X << " " << __FILE__ << ": " << __LINE__
 
 //Narrow-char thread-safe logger.
 typedef boost::log::sources::severity_logger_mt<boost::log::trivial::severity_level> logger_t;

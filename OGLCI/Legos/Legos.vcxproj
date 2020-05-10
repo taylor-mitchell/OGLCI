@@ -102,12 +102,21 @@
   <ItemGroup>
     <ClInclude Include="include\Buffer.h" />
     <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\ErrorChecking.h" />
+    <ClInclude Include="include\IndexBuffer.h" />
     <ClInclude Include="include\Logger.h" />
+    <ClInclude Include="include\Renderer.h" />
     <ClInclude Include="include\Shader.h" />
     <ClInclude Include="include\Transform.h" />
+    <ClInclude Include="include\VertexArray.h" />
+    <ClInclude Include="include\VertexBuffer.h" />
+    <ClInclude Include="include\VertexBufferLayout.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InteropClasses\Buffers\Buffer.cpp" />
+    <ClCompile Include="OpenGL\Buffers\IndexBuffer\IndexBuffer.cpp" />
+    <ClCompile Include="OpenGL\Buffers\VertexArray\VertexArray.cpp" />
+    <ClCompile Include="OpenGL\Buffers\VertexBuffer\VertexBuffer.cpp" />
     <ClCompile Include="OpenGL\Camera.cpp" />
     <ClCompile Include="OpenGL\Shader\Shader.cpp" />
     <ClCompile Include="OpenGL\Transform\Transform.cpp" />
