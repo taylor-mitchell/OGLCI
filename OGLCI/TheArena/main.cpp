@@ -5,132 +5,120 @@
 #include "Shader.h"
 #include "Logger.h"
 #include "VertexBuffer.h"
+#include "VertexBufferLayout.h"
 #include "IndexBuffer.h"
 #include "VertexArray.h"
 #include "ErrorChecking.h"
+#include "Renderer.h"
+#include "Texture.h"
+#include "Window.h"
+#include <glm.hpp>
+#include <ext/matrix_clip_space.hpp>
+#include <ext/matrix_transform.hpp>
+#include "Circle.h" 
+#include <time.h>
+#include "BatchBuffer.h"
 
 int main(void)
 {
-    GLFWwindow* window;    
-
-    /* Initialize the library */
-    if (!glfwInit())
+    srand(time(NULL));
+    Window window;
+    if (!window.isOkay())
     {
-        ERROR("glfw init failed");
         return -1;
     }
-
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-           
-
-    /* Create a windowed mode window and its OpenGL context */
-    INFO("creating window...");
-    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
-    if (!window)
-    {
-        ERROR("failed to create window");
-        glfwTerminate();
-        return -1;
-    }
-    INFO("window created");
-
-    /* Make the window's context current */
-    glfwMakeContextCurrent(window);
-
-    glfwSwapInterval(1);
 
     if (glewInit() != GLEW_OK)
     {
         INFO("glew init failed");
     };
-
     INFO(glGetString(GL_VERSION));
+    GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+    GLCall(glEnable(GL_BLEND));
     {
-
-        float positions[] = {
-            -0.5f, -0.5f,
-             0.5f, -0.5f,
-             0.5f,  0.5f,
-            -0.5f,  0.5f,
-        };
-
-        unsigned int indices[] = {
-            0, 1, 2,
-            2, 3, 0
-        };
-
+        Camera camera(window.getWidth(), window.getHeight());
+        Renderer renderer(&camera);
         
-        VertexArray va;
-        VertexBuffer vb(positions, 4 * 2 * sizeof(float));
-        VertexBufferLayout layout;
-        layout.push<float>(2);
-        va.addBuffer(vb, layout);       
+        Circle circle(400.0f, 400.0f, 50.0f);
+        Circle circle2(400.0f, 300.0f, 50.0f);
+        BatchBuffer<Circle> batch(2, circle.getShader());
+        circle.setDX(1.0f);
+        circle2.setDX(-1.0f);
+        int id = batch.addToBuffer(circle);
+        int id2 = batch.addToBuffer(circle2);
 
-        IndexBuffer ib(indices, 6);
-
-
-        INFO("loading shaders...");
-        Shader shader("resources/Shaders/basic");
-
-        if (shader.getError() != 0)
-        {
-            ERROR("failed to load shaders");
-            return -1;
-        }
-        INFO("shaders loaded");
-
-        shader.bind();
-
-        unsigned int program = shader.getProgram();
-
-        GLCall(int location = glGetUniformLocation(program, "u_color"));
-        DEBUG_ASSERT(location != -1);
-
-        float r = 0.0f;
-        float g = 0.0f;
-        float b = 0.0f;
-        float increment_r = 0.01f;
-        float increment_g = 0.02f;
-        float increment_b = 0.03f;
         INFO("beginning main loop");
         /* Loop until the user closes the window */
-        while (!glfwWindowShouldClose(window))
+        while (!window.shouldClose())
         {
             /* Render here */
-            GLCall(glClear(GL_COLOR_BUFFER_BIT));
-            GLCall(glUniform4f(location, r, g, b, 1.0f));
+            renderer.clear();
+            batch.updateBuffer();
+            batch.draw(renderer);
+            circle.update();
+            circle2.update();
+            batch.updateObject(id, circle);
+            batch.updateObject(id2, circle2);
 
-            va.bind();
-            ib.bind();
-            GLCall(glDrawElements(GL_TRIANGLES, ib.getCount(), GL_UNSIGNED_INT, nullptr));
-            if (r > 1.0f || r < 0.0f)
-            {
-                increment_r *= -1;
-            }
-            if (g > 1.0f || g < 0.0f)
-            {
-                increment_g *= -1;
-            }
-            if (b > 1.0f || b < 0.0f)
-            {
-                increment_b *= -1;
-            }
-
-            r += increment_r;
-            g += increment_g;
-            b += increment_b;
-
-            /* Swap front and back buffers */
-            glfwSwapBuffers(window);
-
-            /* Poll for and process events */
-            glfwPollEvents();
+            window.swap();
+            window.poll();
         }
 
         INFO("shutting down");
     }
     glfwTerminate();
     return 0;
+}
+
+void drawABunchOfCircles(Window* window)
+{
+    const int NUM_CIRCLES = 100;
+    Circle circles[NUM_CIRCLES];    
+
+    for (int i = 0; i < NUM_CIRCLES; i++)
+    {
+        float x = rand() % window->getWidth();
+        float y = rand() % window->getHeight();
+        float r = rand() % 10 + 1;
+        float red = (float)rand() / (float)RAND_MAX;
+        float blue = (float)rand() / (float)RAND_MAX;
+        float green = (float)rand() / (float)RAND_MAX;
+        float dx = (float)rand() / (float)RAND_MAX - 0.5f;
+        float dy = (float)rand() / (float)RAND_MAX - 0.5f;
+        circles[i].setX(x);
+        circles[i].setY(y);
+        circles[i].setR(r);
+        circles[i].setRed(red);
+        circles[i].setBlue(blue);
+        circles[i].setGreen(green);
+        circles[i].setDX(dx);
+        circles[i].setDY(dy);
+    }
+
+    Camera camera(window->getWidth(), window->getHeight());
+    Renderer renderer(&camera);
+
+    INFO("beginning main loop");
+    /* Loop until the user closes the window */
+    while (!window->shouldClose())
+    {
+        /* Render here */
+        renderer.clear();
+        for (int i = 0; i < NUM_CIRCLES; i++)
+            circles[i].draw(renderer);
+        if (window->getMouseState().inWindow)
+        {
+            if (window->getMouseState().leftDown)
+            {
+                for (int i = 0; i < NUM_CIRCLES; i++)
+                    circles[i].gravitate(window->getMouseState().mouseX, window->getMouseState().mouseY, 1.0f, 1000.0f);
+            }
+        }
+        for (int i = 0; i < NUM_CIRCLES; i++)
+            circles[i].update();
+        window->swap();
+        window->poll();
+    }
+
+    INFO("shutting down");
 }

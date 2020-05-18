@@ -30,8 +30,13 @@ private:
 public:
 	VertexBufferLayout()
 		:m_stride() {};
+	VertexBufferLayout(const VertexBufferLayout& layout)
+		:m_elements(layout.m_elements)
+		, m_stride(layout.m_stride) {};
 
 	~VertexBufferLayout() {};
+
+	inline unsigned int getStride() const { return m_stride; };
 
 	template<typename T>
 	void push(unsigned int count)
@@ -64,6 +69,5 @@ public:
 	}
 
 	inline const std::vector<VertexBufferElement> getElements() const { return m_elements; }
-	inline unsigned int getStride() const { return m_stride; }
 
 };

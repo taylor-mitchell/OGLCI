@@ -1,3 +1,2 @@
-﻿  VertexArray.cpp
-C:\development\OGLCI\OGLCI\Legos\OpenGL\Buffers\VertexArray\VertexArray.cpp(35,3): warning C4312: 'type cast': conversion from 'unsigned int' to 'const void *' of greater size
+﻿  Circle.cpp
   Legos.vcxproj -> C:\development\OGLCI\OGLCI\x64\Release\Legos.lib

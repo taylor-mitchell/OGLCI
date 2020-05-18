@@ -1,63 +1,119 @@
 #include "Shader.h"
-#include <iostream>
 #include <fstream>
+#include "ErrorChecking.h"
 
 Shader::Shader()
 {
-
 }
 
 Shader::Shader(const std::string& filename)
+	:m_filepath(filename), m_rendererId(0)
 {
-	error = 0;
-	programHandle = glCreateProgram();
+	m_rendererId = glCreateProgram();
 	shaders[0] = createShader(loadShader(filename + ".vs"), GL_VERTEX_SHADER);
 	shaders[1] = createShader(loadShader(filename + ".fs"), GL_FRAGMENT_SHADER);
 
-	if (error == 0)
+	for (unsigned int i = 0; i < NUM_SHADERS; i++)
 	{
+		GLCall(glAttachShader(m_rendererId, shaders[i]));
+	}
 
-		for (unsigned int i = 0; i < NUM_SHADERS; i++)
-		{
-			glAttachShader(programHandle, shaders[i]);
-		}
+	GLCall(glLinkProgram(m_rendererId));
+	checkShaderError(m_rendererId, GL_LINK_STATUS, true, "Error linking shader program");
 
-		glBindAttribLocation(programHandle, 0, "position");
-		glBindAttribLocation(programHandle, 1, "texCoord");
-		glBindAttribLocation(programHandle, 2, "normal");
+	GLCall(glValidateProgram(m_rendererId));
+	checkShaderError(m_rendererId, GL_LINK_STATUS, true, "Invalid shader program");
 
-		glLinkProgram(programHandle);
-		checkShaderError(programHandle, GL_LINK_STATUS, true, "Error linking shader program");
 
-		glValidateProgram(programHandle);
-		checkShaderError(programHandle, GL_LINK_STATUS, true, "Invalid shader program");
-
-		uniforms[TRANSFORM_U] = glGetUniformLocation(programHandle, "transform");
+	for (unsigned int i = 0; i < NUM_SHADERS; i++)
+	{
+		GLCall(glDeleteShader(shaders[i]));
 	}
 }
 
 Shader::~Shader()
 {
-	for (unsigned int i = 0; i < NUM_SHADERS; i++)
+	GLCall(glDeleteProgram(m_rendererId));
+}
+
+void Shader::load(const std::string& filepath)
+{
+	if (m_rendererId)
 	{
-		glDetachShader(programHandle, shaders[i]);
-		glDeleteShader(shaders[i]);
+		GLCall(glDeleteProgram(m_rendererId));
 	}
 
-	glDeleteProgram(programHandle);
+	m_rendererId = glCreateProgram();
+	shaders[0] = createShader(loadShader(filepath + ".vs"), GL_VERTEX_SHADER);
+	shaders[1] = createShader(loadShader(filepath + ".fs"), GL_FRAGMENT_SHADER);
+
+	for (unsigned int i = 0; i < NUM_SHADERS; i++)
+	{
+		GLCall(glAttachShader(m_rendererId, shaders[i]));
+	}
+
+	GLCall(glLinkProgram(m_rendererId));
+	checkShaderError(m_rendererId, GL_LINK_STATUS, true, "Error linking shader program");
+
+	GLCall(glValidateProgram(m_rendererId));
+	checkShaderError(m_rendererId, GL_LINK_STATUS, true, "Invalid shader program");
+
+
+	for (unsigned int i = 0; i < NUM_SHADERS; i++)
+	{
+		GLCall(glDeleteShader(shaders[i]));
+	}
 }
 
-void Shader::bind()
+void Shader::bind() const
 {
-	glUseProgram(programHandle);
+	GLCall(glUseProgram(m_rendererId));
 }
 
-void Shader::update(const Transform& transforms)
+void Shader::unbind() const
 {
-	//glm::mat4 model = transforms.getModel();
-
-	//glUniformMatrix4fv(uniforms[TRANSFORM_U], 1, GL_FALSE, &model[0][0]);
+	GLCall(glUseProgram(0));
 }
+
+void Shader::setUniform1i(const std::string& name, int value)
+{
+	GLCall(glUniform1i(getUniformLocation(name), value));
+}
+
+void Shader::setUniform1f(const std::string& name, float value)
+{
+	GLCall(glUniform1f(getUniformLocation(name), value));
+}
+
+void Shader::setUniform4f(const std::string& name, float f0, float f1, float f2, float f3)
+{
+	GLCall(glUniform4f(getUniformLocation(name), f0, f1, f2, f3));
+}
+
+void Shader::setUniformMat4f(const std::string& name, const glm::mat4& value)
+{
+	GLCall(glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, &value[0][0]));
+}
+
+int Shader::getUniformLocation(const std::string& name)
+{
+	if (m_uniformCache.find(name) != m_uniformCache.end())
+	{
+		return m_uniformCache[name];
+	}
+
+	GLCall(unsigned int location = glGetUniformLocation(m_rendererId, name.c_str()));
+	
+	if (location == -1)
+	{
+		WARN("uniform " + name + " not found in shader");
+	}
+
+	m_uniformCache[name] = location;	
+
+	return location;
+}
+
 
 std::string Shader::loadShader(const std::string& filename)
 {
@@ -78,7 +134,6 @@ std::string Shader::loadShader(const std::string& filename)
 	else
 	{
 		ERROR("Unable to open shader file: " + filename);
-		error = 1;
 	}
 
 	return output;
@@ -110,7 +165,6 @@ bool Shader::checkShaderError(unsigned int shader, unsigned int flag, bool isPro
 		}
 
 		ERROR(errorMessage + ": '" + errorString + "'");
-		error = 1;
 		return false;
 	}
 	return true;
@@ -118,7 +172,7 @@ bool Shader::checkShaderError(unsigned int shader, unsigned int flag, bool isPro
 
 unsigned int Shader::createShader(const std::string& text, unsigned int type)
 {
-	unsigned int shader = glCreateShader(type);
+	GLCall(unsigned int shader = glCreateShader(type));
 
 	if (shader == 0)
 	{
@@ -137,3 +191,5 @@ unsigned int Shader::createShader(const std::string& text, unsigned int type)
 
 	return shader;
 }
+
+

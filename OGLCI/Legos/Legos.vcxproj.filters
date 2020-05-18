@@ -49,6 +49,24 @@
     <Filter Include="OpenGL\Buffers\VertexBufferLayout">
       <UniqueIdentifier>{6b637cd5-e55f-4265-8b4b-ddc62e45965e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="OpenGL\Texture">
+      <UniqueIdentifier>{db0937ca-4a47-4602-bdcf-dcb4bae6a2b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Window">
+      <UniqueIdentifier>{d73b348a-b897-47a0-a0bb-508ecd005ec8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Drawables">
+      <UniqueIdentifier>{b80ace1b-0175-4aef-95b9-0ef7044af4d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Drawables\Circle">
+      <UniqueIdentifier>{cad0dd41-3afe-4e49-a92c-2af679c4710a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Structures">
+      <UniqueIdentifier>{4126b9a2-67ed-4b60-bdbb-4cc0fceb6b10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Buffers\BatchBuffer">
+      <UniqueIdentifier>{2735dac9-76c3-4bca-90b4-d64fa10b9303}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InteropClasses\Buffers\Buffer.cpp">
@@ -74,6 +92,21 @@
     </ClCompile>
     <ClCompile Include="OpenGL\Buffers\VertexArray\VertexArray.cpp">
       <Filter>OpenGL\Buffers\VertexArray</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Renderer\Renderer.cpp">
+      <Filter>OpenGL\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Texture\Texture.cpp">
+      <Filter>OpenGL\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Window\Window.cpp">
+      <Filter>OpenGL\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Drawables\Circle\Circle.cpp">
+      <Filter>OpenGL\Drawables\Circle</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Shader\ShaderFactory.cpp">
+      <Filter>OpenGL\Shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +142,27 @@
     </ClInclude>
     <ClInclude Include="include\VertexBufferLayout.h">
       <Filter>OpenGL\Buffers\VertexBufferLayout</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Texture.h">
+      <Filter>OpenGL\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Window.h">
+      <Filter>OpenGL\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Drawable.h">
+      <Filter>OpenGL\Drawables</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Circle.h">
+      <Filter>OpenGL\Drawables\Circle</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ShaderFactory.h">
+      <Filter>OpenGL\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Structures.h">
+      <Filter>OpenGL\Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BatchBuffer.h">
+      <Filter>OpenGL\Buffers\BatchBuffer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
