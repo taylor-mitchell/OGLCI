@@ -1,2 +1,27 @@
-﻿  Circle.cpp
+﻿  MatrixFunctions.cpp
+C:\development\OGLCI\OGLCI\Legos\Utility\Math\MatrixFunctions\MatrixFunctions.cpp(11,21): warning C4018: '<': signed/unsigned mismatch
+C:\development\OGLCI\OGLCI\Legos\Utility\Math\MatrixFunctions\MatrixFunctions.cpp(115,21): warning C4018: '<': signed/unsigned mismatch
+C:\development\OGLCI\OGLCI\Legos\Utility\Math\MatrixFunctions\MatrixFunctions.cpp(143,21): warning C4018: '<': signed/unsigned mismatch
+C:\development\OGLCI\OGLCI\Legos\Utility\Math\MatrixFunctions\MatrixFunctions.cpp(145,22): warning C4018: '<': signed/unsigned mismatch
+C:\development\OGLCI\OGLCI\Legos\Utility\Math\MatrixFunctions\MatrixFunctions.cpp(148,23): warning C4018: '<': signed/unsigned mismatch
+C:\development\OGLCI\OGLCI\Legos\include\Array2D.h(46,20): warning C4018: '<': signed/unsigned mismatch
+C:\development\OGLCI\OGLCI\Legos\include\Array2D.h(41): message : while compiling class template member function 'Array2D<float>::Array2D(unsigned int,unsigned int)'
+C:\development\OGLCI\OGLCI\Legos\Utility\Math\MatrixFunctions\MatrixFunctions.cpp(9): message : see reference to function template instantiation 'Array2D<float>::Array2D(unsigned int,unsigned int)' being compiled
+C:\development\OGLCI\OGLCI\Legos\Utility\Math\MatrixFunctions\MatrixFunctions.cpp(8): message : see reference to class template instantiation 'Array2D<float>' being compiled
+C:\development\OGLCI\OGLCI\Legos\include\Array2D.h(116,20): warning C4018: '<': signed/unsigned mismatch
+C:\development\OGLCI\OGLCI\Legos\include\Array2D.h(115): message : while compiling class template member function 'void Array2D<float>::setAll(const T &)'
+          with
+          [
+              T=float
+          ]
+C:\development\OGLCI\OGLCI\Legos\Utility\Math\MatrixFunctions\MatrixFunctions.cpp(10): message : see reference to function template instantiation 'void Array2D<float>::setAll(const T &)' being compiled
+          with
+          [
+              T=float
+          ]
+C:\development\OGLCI\OGLCI\Legos\include\Array2D.h(118,21): warning C4018: '<': signed/unsigned mismatch
+C:\development\OGLCI\OGLCI\Legos\include\Array2D.h(152,21): warning C4018: '<': signed/unsigned mismatch
+C:\development\OGLCI\OGLCI\Legos\include\Array2D.h(147): message : while compiling class template member function 'void Array2D<float>::setSize(unsigned int,unsigned int)'
+C:\development\OGLCI\OGLCI\Legos\Utility\Math\MatrixFunctions\MatrixFunctions.cpp(25): message : see reference to function template instantiation 'void Array2D<float>::setSize(unsigned int,unsigned int)' being compiled
+C:\development\OGLCI\OGLCI\Legos\include\Array2D.h(162,21): warning C4018: '<': signed/unsigned mismatch
   Legos.vcxproj -> C:\development\OGLCI\OGLCI\x64\Release\Legos.lib

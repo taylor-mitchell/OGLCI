@@ -1,11 +1,10 @@
-#ifndef SHADER_H
-#define SHADER_H
+#pragma once
 
 #include <string>
 #include <GL/glew.h>
 #include "Logger.h"
 #include <unordered_map>
-#include "glm.hpp"
+#include <glm.hpp>
 
 class Shader
 {
@@ -37,6 +36,3 @@ public:
 	void setUniformMat4f(const std::string& name, const glm::mat4& value);
 	//void update(const Transform& transform);
 };
-
-
-#endif

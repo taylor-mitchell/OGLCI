@@ -28,8 +28,7 @@ private:
 	void resetLocalBuffers();
 
 public:
-	BatchBuffer(int size) :size(size), verticesSize(T::getVertexCount()* T::getVertexSize()* size * sizeof(float)), indicesSize(T::getIndicesLayout().size() * size), cursor(0), shader(nullptr), vertices(nullptr), indices(nullptr) {};
-	BatchBuffer(int size, std::shared_ptr<Shader> shader);
+	BatchBuffer(int size);
 	~BatchBuffer();
 
 	int addToBuffer(T& obj);
@@ -56,12 +55,12 @@ inline void BatchBuffer<T>::resetLocalBuffers()
 }
 
 template<class T>
-BatchBuffer<T>::BatchBuffer(int size, std::shared_ptr<Shader> shader)
+BatchBuffer<T>::BatchBuffer(int size)
 	:size(size),
 	verticesSize(T::getVertexCount()* T::getVertexSize()* size * sizeof(float)),
 	indicesSize(T::getIndicesLayout().size()* size),
 	cursor(0),
-	shader(shader),
+	shader(T::getShader()),
 	va(std::make_unique<VertexArray>()),
 	vb(std::make_unique<VertexBuffer>(nullptr, verticesSize, true)),
 	ib(std::make_unique<IndexBuffer>(nullptr, T::getIndicesLayout().size() * size)),

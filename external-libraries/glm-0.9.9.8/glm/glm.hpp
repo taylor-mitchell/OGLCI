@@ -126,9 +126,9 @@
 #include "mat4x3.hpp"
 #include "mat4x4.hpp"
 
+#include "common.hpp"
 #include "trigonometric.hpp"
 #include "exponential.hpp"
-#include "common.hpp"
 #include "packing.hpp"
 #include "geometric.hpp"
 #include "matrix.hpp"

@@ -102,14 +102,17 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\Array2D.h" />
     <ClInclude Include="include\BatchBuffer.h" />
     <ClInclude Include="include\Buffer.h" />
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\Circle.h" />
     <ClInclude Include="include\Drawable.h" />
     <ClInclude Include="include\ErrorChecking.h" />
+    <ClInclude Include="include\Grid.h" />
     <ClInclude Include="include\IndexBuffer.h" />
     <ClInclude Include="include\Logger.h" />
+    <ClInclude Include="include\MatrixFunctions.h" />
     <ClInclude Include="include\Renderer.h" />
     <ClInclude Include="include\Shader.h" />
     <ClInclude Include="include\ShaderFactory.h" />
@@ -128,6 +131,7 @@
     <ClCompile Include="OpenGL\Buffers\VertexBuffer\VertexBuffer.cpp" />
     <ClCompile Include="OpenGL\Camera.cpp" />
     <ClCompile Include="OpenGL\Drawables\Circle\Circle.cpp" />
+    <ClCompile Include="OpenGL\Drawables\Grid\Grid.cpp" />
     <ClCompile Include="OpenGL\Renderer\Renderer.cpp" />
     <ClCompile Include="OpenGL\Shader\Shader.cpp" />
     <ClCompile Include="OpenGL\Shader\ShaderFactory.cpp" />
@@ -135,6 +139,7 @@
     <ClCompile Include="OpenGL\Transform\Transform.cpp" />
     <ClCompile Include="OpenGL\Window\Window.cpp" />
     <ClCompile Include="Utility\Logger\Logger.cpp" />
+    <ClCompile Include="Utility\Math\MatrixFunctions\MatrixFunctions.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

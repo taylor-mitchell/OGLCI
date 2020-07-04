@@ -30,49 +30,47 @@ void Circle::init()
 
 void Circle::updateVertices()
 {
-	vertices[0] = x - r;
-	vertices[1] = y - r;
+	vertices[0] = pos.x - radius;
+	vertices[1] = pos.y - radius;
 	vertices[2] = -1.0f;
 	vertices[3] = -1.0f;
-	vertices[4] = red;
-	vertices[5] = green;
-	vertices[6] = blue;
+	vertices[4] = color.x;
+	vertices[5] = color.y;
+	vertices[6] = color.z;
 
-	vertices[0 + 7] = x - r;
-	vertices[1 + 7] = y + r;
+	vertices[0 + 7] = pos.x - radius;
+	vertices[1 + 7] = pos.y + radius;
 	vertices[2 + 7] = -1.0f;
 	vertices[3 + 7] = 1.0f;
-	vertices[4 + 7] = red;
-	vertices[5 + 7] = green;
-	vertices[6 + 7] = blue;
+	vertices[4 + 7] = color.x;
+	vertices[5 + 7] = color.y;
+	vertices[6 + 7] = color.z;
 
-	vertices[0 + 14] = x + r;
-	vertices[1 + 14] = y - r;
+	vertices[0 + 14] = pos.x + radius;
+	vertices[1 + 14] = pos.y - radius;
 	vertices[2 + 14] = 1.0f;
 	vertices[3 + 14] = -1.0f;
-	vertices[4 + 14] = red;
-	vertices[5 + 14] = green;
-	vertices[6 + 14] = blue;
+	vertices[4 + 14] = color.x;
+	vertices[5 + 14] = color.y;
+	vertices[6 + 14] = color.z;
 
-	vertices[0 + 21] = x + r;
-	vertices[1 + 21] = y + r;
+	vertices[0 + 21] = pos.x + radius;
+	vertices[1 + 21] = pos.y + radius;
 	vertices[2 + 21] = 1.0f;
 	vertices[3 + 21] = 1.0f;
-	vertices[4 + 21] = red;
-	vertices[5 + 21] = green;
-	vertices[6 + 21] = blue;
+	vertices[4 + 21] = color.x;
+	vertices[5 + 21] = color.y;
+	vertices[6 + 21] = color.z;
 }
 
-Circle::Circle() 
-	: Drawable(), 
-	x(0), 
-	y(0), 
-	r(0), 
-	red(1.0f), 
-	green(1.0f), 
-	blue(1.0f),
-	dx(0),
-	dy(0)
+Circle::Circle()
+	: Drawable(),
+	pos(0.0f),
+	radius(0.0f),
+	color(0.0f),
+	velocity(0.0f),
+	indices(),
+	vertices()
 {
 	if (drawMode == DrawMode::SINGLETON)
 	{
@@ -81,16 +79,14 @@ Circle::Circle()
 		
 }
 
-Circle::Circle(float x, float y, float r) 
-	: Drawable(), 
-	x(x), 
-	y(y), 
-	r(r),
-	red(1.0f),
-	green(1.0f),
-	blue(1.0f),
-	dx(0),
-	dy(0)
+Circle::Circle(glm::vec2 pos, float r) 
+	: Drawable(),
+	pos(pos),
+	radius(r),
+	color(1.0f),
+	velocity(0.0f),
+	indices(),
+	vertices()
 {
 	if (drawMode == DrawMode::SINGLETON)
 	{
@@ -98,16 +94,14 @@ Circle::Circle(float x, float y, float r)
 	}
 }
 
-Circle::Circle(float x, float y, float r, float red, float green, float blue)
+Circle::Circle(glm::vec2 pos, float r, glm::vec3 color)
 	: Drawable(),
-	x(x),
-	y(y),
-	r(r),
-	red(red),
-	green(green),
-	blue(blue),
-	dx(0),
-	dy(0)
+	pos(pos),
+	radius(r),
+	color(color),
+	velocity(0.0f),
+	indices(),
+	vertices()
 {
 	if (drawMode == DrawMode::SINGLETON)
 	{
@@ -129,6 +123,14 @@ Circle::~Circle()
 	{
 		delete(ib);
 	}	
+	if (vertices)
+	{
+		delete[] vertices;
+	}
+	if (indices)
+	{
+		delete[] indices;
+	}
 }
 
 void Circle::draw(Renderer& renderer)
@@ -140,9 +142,7 @@ void Circle::draw(Renderer& renderer)
 
 void Circle::update()
 {
-	x += dx;
-	y += dy;
-	
+	pos += velocity;	
 	updateVertices();
 }
 
@@ -160,11 +160,13 @@ std::shared_ptr<Shader> Circle::getShader()
 	return ShaderFactory::getInstance()->getShader("resources/Shaders/circle");
 }
 
-void Circle::gravitate(float x2, float y2, float g, float m2)
+void Circle::gravitateTowards(glm::vec2 pos2, float g, float m2)
 {
-	float acc = g * m2 / glm::dot(glm::vec2(x, y), glm::vec2(x2, y2));
-	float angle = std::atan2(y2 - y, x2 - x);
+	float deltaX = pos2.x - pos.x;
+	float deltaY = pos2.y - pos.y;
+	float acc = g * m2 / glm::dot(glm::vec2(deltaX, deltaY), glm::vec2(deltaX, deltaY));
+	float angle = std::atan2(deltaY, deltaX);
 
-	dx += std::cos(angle) * acc;
-	dy += std::sin(angle) * acc;
+	velocity.x += std::cos(angle) * acc;
+	velocity.y += std::sin(angle) * acc;
 }

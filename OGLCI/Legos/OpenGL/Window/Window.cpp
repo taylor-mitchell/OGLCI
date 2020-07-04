@@ -82,7 +82,6 @@ void Window::mousePosition(double xpos, double ypos)
 {
 	m_mouseState.mouseX = xpos;
 	m_mouseState.mouseY = (double)m_height - ypos;
-	INFO("(" + std::to_string(xpos) + ", " + std::to_string(ypos) + ")");
 }
 
 void Window::mouseClick(int button, int action, int mods)

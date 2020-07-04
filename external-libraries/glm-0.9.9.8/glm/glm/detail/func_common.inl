@@ -29,13 +29,13 @@ namespace glm
 		return (x < y) ? y : x;
 	}
 
-	// abs
+	/*// abs
 	template<>
 	GLM_FUNC_QUALIFIER GLM_CONSTEXPR int abs(int x)
 	{
 		int const y = x >> (sizeof(int) * 8 - 1);
 		return (x ^ y) - y;
-	}
+	}*/
 
 	// round
 #	if GLM_HAS_CXX11_STL

@@ -1,18 +1,17 @@
 #pragma once
 #include "Drawable.h"
+#include <glm.hpp>
 
-class Circle : Drawable
+class Circle : public Drawable
 {
 private:
-	float x;
-	float y;
-	float r;
-	float red;
-	float green;
-	float blue;
-
-	float dx;
-	float dy;
+	glm::vec2 pos;	
+	glm::vec2 oldPos;
+	glm::vec3 color;
+	glm::vec2 velocity;
+	glm::mat2 affineVelocity;
+	float density;
+	float radius;
 
 	float vertices[7 * 4];
 	unsigned int indices[6];
@@ -21,38 +20,34 @@ private:
 	void updateVertices();
 public:
 	Circle();
-	Circle(float x, float y, float r);
-	Circle(float x, float y, float r, float red, float green, float blue);
+	Circle(glm::vec2 pos, float r);
+	Circle(glm::vec2 pos, float r, glm::vec3 color);
 	~Circle();
+
 	void draw(Renderer& renderer) override;
-	void update() override;
+	void update() override;	
+	
+	static std::shared_ptr<VertexBufferLayout> getBufferLayout();
+	static std::shared_ptr<Shader> getShader();
 	static unsigned int getVertexCount() { return 4; };
 	static unsigned int getVertexSize() { return 7; };
 	static std::vector<unsigned int> getIndicesLayout() { return { 0, 1, 2, 1, 2, 3 }; };
-	static std::shared_ptr<VertexBufferLayout> getBufferLayout();
-	static std::shared_ptr<Shader> getShader();
-
-	inline float getX() { return x; };
-	inline float getY() { return y; };
-	inline float getR() { return r; };
-	inline float getRed() { return red; };
-	inline float getGreen() { return green; };
-	inline float getBlue() { return blue; };
-	inline float getDX() { return dx; };
-	inline float getDY() { return dy; };
-
+	inline glm::vec2 getPos() { return pos; };
+	inline glm::vec2 getOldPos() { return oldPos; };
+	inline glm::vec3 getColor() { return color; };
+	inline glm::vec2 getVelocity() { return velocity; };
+	inline glm::mat2 getAffineVelocity() { return affineVelocity; };
+	inline float getRadius() { return radius; };
+	inline float getDensity() { return density; };
 	inline float* getVertices() { return vertices; };
 
-
-	void setX(float x) { this->x = x; };
-	void setY(float y) { this->y = y; };
-	void setR(float r) { this->r = r; };
-	void setRed(float red) { this->red = red; };
-	void setGreen(float green) { this->green = green; };
-	void setBlue(float blue) { this->blue = blue; };
-
-	void setDX(float dx) { this->dx = dx; };
-	void setDY(float dy) { this->dy = dy; };
+	void setPos(glm::vec2 pos) { this->pos = pos; };
+	void setOldPos(glm::vec2 oldPos) { this->oldPos = oldPos; };
+	void setRadius(float r) { this->radius = r; };
+	void setColor(glm::vec3 color) { this->color = color; };
+	void setAffineVelocity(glm::mat2 affVel) { this->affineVelocity = affVel; };
+	void setVelocity(glm::vec2 velocity) { this->velocity = velocity; };
+	void setDensity(float density) { this->density = density; };
 	
-	void gravitate(float x, float y, float g, float m2);
+	void gravitateTowards(glm::vec2 pos, float g, float m2);
 };

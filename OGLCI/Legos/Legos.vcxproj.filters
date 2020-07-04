@@ -67,6 +67,15 @@
     <Filter Include="OpenGL\Buffers\BatchBuffer">
       <UniqueIdentifier>{2735dac9-76c3-4bca-90b4-d64fa10b9303}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Cuda">
+      <UniqueIdentifier>{4624a9b5-b6c0-4534-aade-3bc97e34c799}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Drawables\Grid">
+      <UniqueIdentifier>{54f763b2-6fc8-4dd5-a73c-a7138848d261}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utitlity\Math">
+      <UniqueIdentifier>{767feb07-a4dd-474f-8327-58214baee664}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InteropClasses\Buffers\Buffer.cpp">
@@ -107,6 +116,12 @@
     </ClCompile>
     <ClCompile Include="OpenGL\Shader\ShaderFactory.cpp">
       <Filter>OpenGL\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Drawables\Grid\Grid.cpp">
+      <Filter>OpenGL\Drawables\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\Math\MatrixFunctions\MatrixFunctions.cpp">
+      <Filter>Utitlity\Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +178,15 @@
     </ClInclude>
     <ClInclude Include="include\BatchBuffer.h">
       <Filter>OpenGL\Buffers\BatchBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Grid.h">
+      <Filter>OpenGL\Drawables\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Array2D.h">
+      <Filter>Utitlity\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MatrixFunctions.h">
+      <Filter>Utitlity\Math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

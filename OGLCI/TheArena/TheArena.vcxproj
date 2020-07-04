@@ -84,10 +84,18 @@
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CholeskyFactorizer.cpp" />
+    <ClCompile Include="FluidGrid.cpp" />
+    <ClCompile Include="Kernel.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="kernel.cu" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CholeskyFactorizer.h" />
+    <ClInclude Include="FluidGrid.h" />
+    <ClInclude Include="Kernel.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
