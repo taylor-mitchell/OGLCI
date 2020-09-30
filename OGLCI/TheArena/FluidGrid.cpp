@@ -1,44 +1,42 @@
 #include "FluidGrid.h"
-#include "MatrixFunctions.h"
+
 
 FluidGrid::FluidGrid(int width, int height, float cellWidth, float cellHeight)
-    :width(width),
-    height(height),
-    cellWidth(cellWidth),
-    cellHeight(cellHeight),
-    density(1.0f),
-    grid(width, height, cellWidth, cellHeight),
-    cells(width, height),
-    distances(width, height),
-    velocities(width, height),
-    pressures(width, height),
-    pressureDerivatives(width, height),
-	pressureLHS(width * height, width * height)
+	:width(width),
+	height(height),
+	cellWidth(cellWidth),
+	cellHeight(cellHeight),
+	viscosity(1.0f),
+	deltaT(0.001f),
+	grid(width, height, cellWidth, cellHeight),
+	cells(width, height),
+	lines(width, height),
+	densities(width, height),
+	energies(width, height),
+	velocities(width, height),
+	pressures(width, height),
+	velocityTimeDerivative(width, height),
+	velocitySpatialDerivative(width, height),
+	velocitySecondSpatialDerivative(width, height),
+	velocityMixedDerivative(width, height),
+	densityTimeDerivative(width, height),
+	densitySecondTimeDerivative(width, height),
+	densitySpatialDerivative(width, height),
+	densitySecondSpatialDerivative(width, height),
+	densityMixedDerivative(width, height),
+	pressureSpatialDerivative(width, height),
+	pressureSecondSpatialDerivative(width, height)	
 {
-	for (int i = 0; i < width * height; ++i)
-	{
-		for (int j = 0; j < width * height; ++j)
-		{
-			if (i == j)
-			{
-				pressureLHS(i, j) = 1.0f;
-			}
-			else
-			{
-				if (i == j - width || i == j + width || i == j - 1 || i == j + 1)
-				{
-					pressureLHS(i, j) = -1.0f;
-				}
-			}
-		}
-	}
 }
 
 void FluidGrid::addParticle(Circle* circle)
 {
-	int gridPosX = circle->getPos().x / cellWidth;
-	int gridPosY = circle->getPos().y / cellHeight;
-	cells(gridPosX, gridPosY).push_back(circle);
+	int gridPosX = static_cast<int>(circle->getPos().x / cellWidth);
+	int gridPosY = static_cast<int>(circle->getPos().y / cellHeight);
+	if (gridPosX > 0 && gridPosX < width && gridPosY > 0 && gridPosY < height)
+	{
+		cells(gridPosX, gridPosY).push_back(circle);
+	}
 }
 
 void FluidGrid::interpolateParticles()
@@ -48,9 +46,11 @@ void FluidGrid::interpolateParticles()
 		for (int j = 0; j < height; ++j)
 		{
 			velocities(i, j) = glm::vec2(0.0f, 0.0f);
+			//weights(i, j) = 0.0f;
 			for (int k = 0; k < cells(i, j).size(); ++k)
 			{
 				velocities(i, j) += cells(i, j).at(k)->getVelocity();
+				//weights(i, j) += cells(i, j).at(k)->getRadius();
 			}
 		}
 	}
@@ -70,18 +70,6 @@ void FluidGrid::extrapolateParticles()
 	}
 }
 
-void FluidGrid::populateDistances()
-{
-	for (int i = 0; i < height; ++i)
-	{
-		for (int j = 0; j < width; ++j)
-		{
-			//just using a static wall on the bottom of the grid for now
-			distances(j, i) = i * cellHeight;
-		}
-	}
-}
-
 void FluidGrid::clearParticles()
 {
 	for (int i = 0; i < width; ++i)
@@ -93,62 +81,86 @@ void FluidGrid::clearParticles()
 	}
 }
 
-void FluidGrid::calculatePressure()
+void FluidGrid::calculateSpatialDerivatives()
 {
-	Array2D<float> pressureResult;
-	Array2D<float> permutation;
-	Array2D<float> lower;
-	Array2D<float> upper;
+	velocitySpatialDerivative = Matrix::derivative(velocities, cellWidth, cellHeight);
+	velocitySecondSpatialDerivative = Matrix::secondDerivative(velocities, cellWidth, cellHeight);
+	velocityMixedDerivative = Matrix::mixedDerivative(velocities, cellWidth, cellHeight);
 
-	Array2D<float> pressureRHS;
-	pressureRHS.setSize(1, width * height);
+	densitySpatialDerivative = Matrix::derivative(densities, cellWidth, cellHeight);
+	densitySecondSpatialDerivative = Matrix::secondDerivative(densities, cellWidth, cellHeight);
+	densityMixedDerivative = Matrix::mixedDerivative(densities, cellWidth, cellHeight);
 
-    for (int j = 1; j < height - 1; ++j) {
-		for (int i = 1; i < width - 1; ++i) {
-			pressureRHS(0, j * width + i) = cells(i, j).size() * -1.0f; //gravity is -1.0f for now. mass is number of particles in the cell      
-        }
-    }
-		
-	//I could just decomposeLU once in constructor and reuse the resulting matrices every time
-	Matrix::decomposeLU(pressureLHS, lower, upper, permutation);
-	Matrix::solveLU(permutation, lower, upper, pressureRHS, pressureResult);
+	pressureSpatialDerivative = Matrix::derivative(pressures, cellWidth, cellHeight);
+	pressureSecondSpatialDerivative = Matrix::secondDerivative(pressures, cellWidth, cellHeight);
+}
 
+void FluidGrid::calculateFirstDerivatives()
+{
 	for (int i = 0; i < width; ++i)
 	{
 		for (int j = 0; j < height; ++j)
 		{
-			pressures(i, j) = glm::vec2(pressureResult(0, j * width + i), pressureResult(0, j * width + i));
+			//some of these might be wrong because of negatives.  if it doesnt work, i will come back and rederive everything :(
+			densityTimeDerivative(i, j) = -1.0f * (densities(i, j) * velocitySpatialDerivative(i, j).du_dx + velocities(i, j).x * densitySpatialDerivative(i, j).du_dx + densities(i, j) * velocitySpatialDerivative(i, j).dv_dy + velocities(i, j).y * densitySpatialDerivative(i, j).du_dy);
+			velocityTimeDerivative(i, j) = -1.0f * glm::vec2(	velocities(i, j).x * velocitySpatialDerivative(i, j).du_dx + velocities(i, j).y * velocitySpatialDerivative(i, j).du_dy + pressureSpatialDerivative(i, j).du_dx / densities(i, j), 
+																velocities(i, j).x * velocitySpatialDerivative(i, j).dv_dx + velocities(i, j).y * velocitySpatialDerivative(i, j).dv_dy + pressureSpatialDerivative(i, j).du_dy / densities(i, j));
 		}
-	}	
+	}
+}
+
+void FluidGrid::calculateSecondDerivatives()
+{
+	for (int i = 0; i < width; ++i)
+	{
+		for (int j = 0; j < height; ++j)
+		{
+			//some of these might be wrong because of negatives.  if it doesnt work, i will come back and rederive everything :(
+			densitySecondTimeDerivative(i, j) =
+				densities(i, j) * (velocities(i, j).x * (2.0f * velocitySecondSpatialDerivative(i, j).du_dx + velocityMixedDerivative(i, j).dv_dydx + velocityMixedDerivative(i, j).dv_dxdy) +
+					velocities(i, j).y * (2.0f * velocitySecondSpatialDerivative(i, j).dv_dy + velocityMixedDerivative(i, j).du_dydx + velocityMixedDerivative(i, j).du_dxdy) +
+					std::pow(velocitySpatialDerivative(i, j).du_dx, 2) + std::pow(velocitySpatialDerivative(i, j).dv_dy, 2) + 2.0f * velocitySpatialDerivative(i, j).dv_dx * velocitySpatialDerivative(i, j).du_dy) +
+				velocities(i, j).x * (velocities(i, j).x * densitySecondSpatialDerivative(i, j).du_dx + 2.0f * densitySpatialDerivative(i, j).du_dx * velocitySpatialDerivative(i, j).du_dx + densitySpatialDerivative(i, j).du_dx * velocitySpatialDerivative(i, j).dv_dy + densitySpatialDerivative(i, j).du_dy * velocitySpatialDerivative(i, j).dv_dx) +
+				velocities(i, j).y * (velocities(i, j).y * densitySecondSpatialDerivative(i, j).du_dy + 2.0f * densitySpatialDerivative(i, j).du_dy * velocitySpatialDerivative(i, j).dv_dy + densitySpatialDerivative(i, j).du_dx * velocitySpatialDerivative(i, j).du_dy + densitySpatialDerivative(i, j).du_dy * velocitySpatialDerivative(i, j).du_dx) +
+				velocities(i, j).x * velocities(i, j).y * (densityMixedDerivative(i, j).du_dxdy + densityMixedDerivative(i, j).du_dydx) +
+				-1.0f / densities(i, j) * (pressureSpatialDerivative(i, j).du_dx * densitySpatialDerivative(i, j).du_dx + pressureSpatialDerivative(i, j).du_dy * densitySpatialDerivative(i, j).du_dy) +
+				densitySecondSpatialDerivative(i, j).du_dx + densitySecondSpatialDerivative(i, j).du_dy -
+				densityTimeDerivative(i, j) * velocitySpatialDerivative(i, j).du_dx -
+				velocityTimeDerivative(i, j).x * densitySpatialDerivative(i, j).du_dx -
+				densityTimeDerivative(i, j) * velocitySpatialDerivative(i, j).du_dy -
+				velocityTimeDerivative(i, j).y * densitySpatialDerivative(i, j).du_dy;
+		}
+	}
+}
+
+void FluidGrid::calculatePressure()
+{
+	
 }
 
 void FluidGrid::calculateVelocity()
 {
-	float viscosity = 1.0f;
-	for (int j = 1; j < height - 1; ++j) {
-		for (int i = 1; i < width - 1; ++i) {
-			glm::vec2 velocityConvection = glm::vec2((velocities(i - 1, j).x + velocities(i + 1, j).x) / 2.0f, (velocities(i, j - 1).y + velocities(i, j + 1).y) / 2.0f);
-			glm::vec2 velocityLaplacian = glm::vec2(
-				velocities(i - 1, j).x + velocities(i + 1, j).x + velocities(i, j - 1).x + velocities(i, j + 1).x - 4.0f * velocities(i, j).x / (cellWidth * cellWidth),
-				velocities(i - 1, j).y + velocities(i + 1, j).y + velocities(i, j - 1).y + velocities(i, j + 1).y - 4.0f * velocities(i, j).y / (cellHeight * cellHeight));
-			glm::vec2 pressureGradient = glm::vec2((pressures(i - 1, j).x + pressures(i + 1, j).x) / 2.0f, (pressures(i, j - 1).y + pressures(i, j + 1).y) / 2.0f);
-			velocities(i, j) = pressureGradient * -1.0f / density + viscosity * velocityLaplacian - velocityConvection * velocities(i, j);
-		}
-	}
 
-	for (int i = 0; i < width; ++i)
-	{
-		velocities(i, 0).y = 0.0f;
-	}
+}
+
+void FluidGrid::calculateEnergy()
+{
 }
 
 void FluidGrid::update()
 {
-	interpolateParticles();
+	//interpolateParticles();
+	calculateSpatialDerivatives();
+	calculateDensity();
 	calculatePressure();
 	calculateVelocity();
-	extrapolateParticles();
+	//extrapolateParticles();
 	clearParticles();
+}
+
+void FluidGrid::draw(Renderer& renderer)
+{
+
 }
 
 

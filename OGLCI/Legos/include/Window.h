@@ -1,5 +1,5 @@
 #pragma once
-#include <GLFW/glfw3.h>
+#include "GLIncludes.h"
 #include <string>
 #include <glm.hpp>
 #include <unordered_map>

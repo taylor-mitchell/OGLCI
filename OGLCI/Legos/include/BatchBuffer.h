@@ -12,7 +12,7 @@ class BatchBuffer
 {
 	static_assert(std::is_base_of<Drawable, T>::value);
 private:
-	int size;
+	unsigned int size;
 	unsigned int verticesSize;
 	unsigned int indicesSize;
 	unsigned int cursor;
@@ -28,7 +28,7 @@ private:
 	void resetLocalBuffers();
 
 public:
-	BatchBuffer(int size);
+	BatchBuffer(unsigned int size);
 	~BatchBuffer();
 
 	int addToBuffer(T& obj);
@@ -55,15 +55,15 @@ inline void BatchBuffer<T>::resetLocalBuffers()
 }
 
 template<class T>
-BatchBuffer<T>::BatchBuffer(int size)
+BatchBuffer<T>::BatchBuffer(unsigned int size)
 	:size(size),
 	verticesSize(T::getVertexCount()* T::getVertexSize()* size * sizeof(float)),
-	indicesSize(T::getIndicesLayout().size()* size),
+	indicesSize(static_cast<unsigned int>(T::getIndicesLayout().size()) * size),
 	cursor(0),
 	shader(T::getShader()),
 	va(std::make_unique<VertexArray>()),
 	vb(std::make_unique<VertexBuffer>(nullptr, verticesSize, true)),
-	ib(std::make_unique<IndexBuffer>(nullptr, T::getIndicesLayout().size() * size)),
+	ib(std::make_unique<IndexBuffer>(nullptr, static_cast<unsigned int>(T::getIndicesLayout().size()) * size)),
 	vertices(nullptr),
 	indices(nullptr)
 {
@@ -100,8 +100,8 @@ int BatchBuffer<T>::addToBuffer(T& obj)
 	{
 		memcpy(&vertices[cursor * T::getVertexCount() * T::getVertexSize()], obj.getVertices(),T::getVertexCount() * T::getVertexSize() * sizeof(float));
 		std::vector<unsigned int> newIndices = obj.getIndicesLayout();
-		unsigned int indicesLayoutSize = newIndices.size();
-		for (unsigned int i = 0; i < newIndices.size(); ++i)
+		unsigned int indicesLayoutSize = static_cast<unsigned int>(newIndices.size());
+		for (unsigned int i = 0; i < static_cast<unsigned int>(newIndices.size()); ++i)
 		{
 			indices[cursor * indicesLayoutSize + i] = cursor * T::getVertexCount() + newIndices[i];
 		}

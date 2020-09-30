@@ -8,11 +8,11 @@ void Window::init()
 	/* Initialize the library */
 	if (!glfwInit())
 	{
-		ERROR("glfw init failed");
+		ERROR_LOG("glfw init failed");
 		return;
 	}
 
-	INFO("creating window...");
+	INFO_LOG("creating window...");
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
@@ -21,7 +21,7 @@ void Window::init()
 	m_window = glfwCreateWindow(m_width, m_height, m_title.c_str(), NULL, NULL);
 	if (!m_window)
 	{
-		ERROR("failed to create window");
+		ERROR_LOG("failed to create window");
 		glfwTerminate();
 		return;
 	}
@@ -33,7 +33,7 @@ void Window::init()
 	glfwSetCursorPosCallback(m_window, mousePositionCallback);
 	glfwSetMouseButtonCallback(m_window, mouseClickCallback);
 	glfwSetCursorEnterCallback(m_window, mouseEnterCallback);
-	INFO("window created");
+	INFO_LOG("window created");
 }
 
 Window::Window()

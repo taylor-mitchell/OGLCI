@@ -1,6 +1,7 @@
 #include "Shader.h"
-#include <fstream>
 #include "ErrorChecking.h"
+#include <fstream>
+
 
 Shader::Shader()
 {
@@ -106,7 +107,7 @@ int Shader::getUniformLocation(const std::string& name)
 	
 	if (location == -1)
 	{
-		WARN("uniform " + name + " not found in shader");
+		WARN_LOG("uniform " + name + " not found in shader");
 	}
 
 	m_uniformCache[name] = location;	
@@ -133,7 +134,7 @@ std::string Shader::loadShader(const std::string& filename)
 	}
 	else
 	{
-		ERROR("Unable to open shader file: " + filename);
+		ERROR_LOG("Unable to open shader file: " + filename);
 	}
 
 	return output;
@@ -164,7 +165,7 @@ bool Shader::checkShaderError(unsigned int shader, unsigned int flag, bool isPro
 			glGetShaderInfoLog(shader, sizeof(errorString), NULL, errorString);
 		}
 
-		ERROR(errorMessage + ": '" + errorString + "'");
+		ERROR_LOG(errorMessage + ": '" + errorString + "'");
 		return false;
 	}
 	return true;
@@ -176,7 +177,7 @@ unsigned int Shader::createShader(const std::string& text, unsigned int type)
 
 	if (shader == 0)
 	{
-		ERROR("Error compiling shader type " + type);
+		ERROR_LOG("Error compiling shader type " + type);
 	}
 
 	const char* p[1];

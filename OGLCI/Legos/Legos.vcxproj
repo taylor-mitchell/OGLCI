@@ -92,6 +92,7 @@
     </Link>
     <CudaCompile>
       <TargetMachinePlatform>64</TargetMachinePlatform>
+      <GenerateRelocatableDeviceCode>true</GenerateRelocatableDeviceCode>
     </CudaCompile>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)../external-libraries/boost_1_73_0/stage/lib;$(SolutionDir)../external-libraries/glfw-3.3.2/lib-vc2019;$(SolutionDir)../external-libraries/glew-2.1.0/lib/Release/x64;%(AdditionalLibraryDirectories);$(CudaToolkitLibDir)</AdditionalLibraryDirectories>
@@ -109,9 +110,12 @@
     <ClInclude Include="include\Circle.h" />
     <ClInclude Include="include\Drawable.h" />
     <ClInclude Include="include\ErrorChecking.h" />
+    <ClInclude Include="include\GLIncludes.h" />
     <ClInclude Include="include\Grid.h" />
     <ClInclude Include="include\IndexBuffer.h" />
+    <ClInclude Include="include\Line.h" />
     <ClInclude Include="include\Logger.h" />
+    <ClInclude Include="include\LoggingUtils.h" />
     <ClInclude Include="include\MatrixFunctions.h" />
     <ClInclude Include="include\Renderer.h" />
     <ClInclude Include="include\Shader.h" />
@@ -132,6 +136,7 @@
     <ClCompile Include="OpenGL\Camera.cpp" />
     <ClCompile Include="OpenGL\Drawables\Circle\Circle.cpp" />
     <ClCompile Include="OpenGL\Drawables\Grid\Grid.cpp" />
+    <ClCompile Include="OpenGL\Drawables\Line\Line.cpp" />
     <ClCompile Include="OpenGL\Renderer\Renderer.cpp" />
     <ClCompile Include="OpenGL\Shader\Shader.cpp" />
     <ClCompile Include="OpenGL\Shader\ShaderFactory.cpp" />
@@ -140,6 +145,9 @@
     <ClCompile Include="OpenGL\Window\Window.cpp" />
     <ClCompile Include="Utility\Logger\Logger.cpp" />
     <ClCompile Include="Utility\Math\MatrixFunctions\MatrixFunctions.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="CudaMatrixFunctions.cu" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

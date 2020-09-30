@@ -41,13 +41,15 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)../external-libraries/Catch2;$(SolutionDir)../external-libraries/boost_1_73_0;$(SolutionDir)/Legos/include;$(SolutionDir)../external-libraries/glfw-3.3.2/include;$(SolutionDir)../external-libraries/glew-2.1.0/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../external-libraries/Catch2;$(SolutionDir)../external-libraries/glm-0.9.9.8/glm;$(SolutionDir)../external-libraries/boost_1_73_0;$(SolutionDir)/Legos/include;$(SolutionDir)../external-libraries/glfw-3.3.2/include;$(SolutionDir)../external-libraries/glew-2.1.0/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -58,6 +60,8 @@
     </Link>
     <CudaCompile>
       <TargetMachinePlatform>64</TargetMachinePlatform>
+      <Include>
+      </Include>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -67,7 +71,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)../external-libraries/Catch2;$(SolutionDir)../external-libraries/boost_1_73_0;$(SolutionDir)/Legos/include;$(SolutionDir)../external-libraries/glfw-3.3.2/include;$(SolutionDir)../external-libraries/glew-2.1.0/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../external-libraries/glm-0.9.9.8/glm;$(SolutionDir)../external-libraries/Catch2;$(SolutionDir)../external-libraries/boost_1_73_0;$(SolutionDir)/Legos/include;$(SolutionDir)../external-libraries/glfw-3.3.2/include;$(SolutionDir)../external-libraries/glew-2.1.0/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -85,12 +89,16 @@
   <ItemGroup>
     <ClCompile Include="ShaderTest.cpp" />
     <ClCompile Include="Test.cpp" />
+    <ClCompile Include="TimingTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="kernel.cu" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TestUtils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

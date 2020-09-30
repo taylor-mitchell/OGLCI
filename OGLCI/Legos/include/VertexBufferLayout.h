@@ -1,7 +1,8 @@
 #pragma once
-#include <vector>
-#include <GL/glew.h>
+#include "GLIncludes.h"
 #include "ErrorChecking.h"
+#include <vector>
+
 
 struct VertexBufferElement
 {

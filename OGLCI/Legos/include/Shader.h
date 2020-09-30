@@ -1,7 +1,7 @@
 #pragma once
 
+#include "GLIncludes.h"
 #include <string>
-#include <GL/glew.h>
 #include "Logger.h"
 #include <unordered_map>
 #include <glm.hpp>

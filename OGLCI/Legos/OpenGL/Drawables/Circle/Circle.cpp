@@ -1,6 +1,5 @@
 #include "Circle.h"
 #include "VertexBufferLayout.h"
-#include <glm.hpp>
 #include "Logger.h"
 
 void Circle::init()
@@ -123,14 +122,6 @@ Circle::~Circle()
 	{
 		delete(ib);
 	}	
-	if (vertices)
-	{
-		delete[] vertices;
-	}
-	if (indices)
-	{
-		delete[] indices;
-	}
 }
 
 void Circle::draw(Renderer& renderer)

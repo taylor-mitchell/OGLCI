@@ -2,7 +2,7 @@
 #include "ErrorChecking.h"
 #include <ext/matrix_clip_space.hpp>
 
-const float M_PI = 3.14159265;
+const float M_PI = 3.14159265f;
 
 Renderer::Renderer()
 	:m_MVP(1.0f),

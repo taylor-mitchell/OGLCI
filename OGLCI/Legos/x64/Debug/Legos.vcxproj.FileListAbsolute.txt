@@ -1,2 +1,0 @@
-C:\development\OGLCI\OGLCI\x64\Debug\Legos.pdb
-C:\development\OGLCI\OGLCI\Legos\x64\Debug\Legos.pdb

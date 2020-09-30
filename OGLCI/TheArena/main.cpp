@@ -1,6 +1,4 @@
-#define GLEW_STATIC
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+#include "GLIncludes.h"
 #include <iostream>
 #include "Shader.h"
 #include "Logger.h"
@@ -21,14 +19,15 @@
 #include "Grid.h"
 #include "FluidGrid.h"
 #include "MatrixFunctions.h"
+#include "Line.h"
 
 void drawABunchOfCircles(Window* window);
 void drawTwoCircles(Window* window);
 //void drawFluidInCircle(Window* window);
 void drawGrid(Window* window);
 void drawFluid(Window* window);
-
-
+void drawArray(Window* window, Array2D<float> data);
+void drawLineTest(Window* window);
 
 int main(void)
 {
@@ -41,14 +40,14 @@ int main(void)
 
     if (glewInit() != GLEW_OK)
     {
-        INFO("glew init failed");
+        INFO_LOG("glew init failed");
     };
-    INFO(glGetString(GL_VERSION));
+    INFO_LOG(glGetString(GL_VERSION));
     GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
     GLCall(glEnable(GL_BLEND));
     {
-        drawFluid(&window);
-        INFO("shutting down");
+        drawLineTest(&window);
+        INFO_LOG("shutting down");
     }
     glfwTerminate();
     return 0;
@@ -58,7 +57,7 @@ void drawABunchOfCircles(Window* window)
 {
     //TODO: need to time difference between batch rendering and non batch rendering
      
-    const int NUM_CIRCLES = 1000000;
+    const unsigned int NUM_CIRCLES = 1000000;
     Circle* circles = new Circle[NUM_CIRCLES]();  
     BatchBuffer<Circle> batch(NUM_CIRCLES);
 
@@ -82,7 +81,7 @@ void drawABunchOfCircles(Window* window)
     Camera camera(window->getWidth(), window->getHeight());
     Renderer renderer(&camera);
 
-    INFO("beginning main loop");
+    INFO_LOG("beginning main loop");
     /* Loop until the user closes the window */
     while (!window->shouldClose())
     {
@@ -138,7 +137,7 @@ void drawTwoCircles(Window* window)
     Camera camera(window->getWidth(), window->getHeight());
     Renderer renderer(&camera);
 
-    INFO("beginning main loop");
+    INFO_LOG("beginning main loop");
     /* Loop until the user closes the window */
     while (!window->shouldClose())
     {
@@ -241,7 +240,7 @@ void drawFluid(Window* window)
     Camera camera(window->getWidth(), window->getHeight());
     Renderer renderer(&camera);
 
-    const int NUM_PARTICLES = 100;
+    const int NUM_PARTICLES = 10;
     Circle** circles = new Circle*[NUM_PARTICLES]();
     BatchBuffer<Circle> batch(NUM_PARTICLES);
 
@@ -261,27 +260,32 @@ void drawFluid(Window* window)
         circles[i]->setColor(glm::vec3(red, green, blue));
         circles[i]->setVelocity(glm::vec2(dx, dy));
         circles[i]->setBatchIndex(batch.addToBuffer(*circles[i]));
+        INFO_LOG(std::to_string(circles[i]->getPos().x) + ", " + std::to_string(circles[i]->getPos().y));
     }
-
-    FluidGrid grid(80, 60, 10.0f, 10.0f);
+    
+    FluidGrid grid(4, 4, 200.0f, 150.0f);
     while (!window->shouldClose())
     {
         /* Render here */
         renderer.clear();
         batch.updateBuffer();
-        //grid.getGrid()->draw(renderer);
-        batch.draw(renderer);        
+        grid.getGrid()->draw(renderer);
+        batch.draw(renderer); 
+
         for (int i = 0; i < NUM_PARTICLES; i++)
         {
             grid.addParticle(circles[i]);
-        }      
-        grid.update();
+        }
+
+        grid.update();       
 
         for (int i = 0; i < NUM_PARTICLES; i++)
         {
             circles[i]->update();
+            INFO_LOG(std::to_string(circles[i]->getPos().x) + ", " + std::to_string(circles[i]->getPos().y));
             batch.updateObject(circles[i]->getBatchIndex(), *circles[i]);
         }
+
         window->swap();
         window->poll();
     }
@@ -296,5 +300,44 @@ void drawFluid(Window* window)
         delete[] circles;
     }
 }
+
+void drawLineTest(Window* window)
+{
+    Camera camera(window->getWidth(), window->getHeight());
+    Renderer renderer(&camera);
+
+   
+    Line line(glm::vec2(0.0f, 0.0f), glm::vec2(0.0f, 0.0f), 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+    BatchBuffer<Line> batch(1);
+    batch.addToBuffer(line);
+
+    while (!window->shouldClose())
+    {
+        /* Render here */
+        renderer.clear();
+        
+        
+        if (window->getMouseState().inWindow)
+        {
+            if (window->getMouseState().leftDown)
+            {
+                line.setPos1(glm::vec2(window->getMouseState().mouseX, window->getMouseState().mouseY));
+            }
+            line.setPos2(glm::vec2(window->getMouseState().mouseX, window->getMouseState().mouseY));
+            line.update();
+            batch.updateObject(line.getBatchIndex(), line);
+        }
+        
+        batch.updateBuffer();
+        batch.draw(renderer);
+        
+
+        window->swap();
+        window->poll();
+    }
+}
+
+
+
 
 

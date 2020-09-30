@@ -76,6 +76,12 @@
     <Filter Include="Utitlity\Math">
       <UniqueIdentifier>{767feb07-a4dd-474f-8327-58214baee664}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Cuda\ErrorCheckers">
+      <UniqueIdentifier>{3df1a738-cd08-443b-8eb4-31872598f77b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Drawables\Line">
+      <UniqueIdentifier>{3acb1747-420e-4b3e-b991-c84be376539f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InteropClasses\Buffers\Buffer.cpp">
@@ -122,6 +128,9 @@
     </ClCompile>
     <ClCompile Include="Utility\Math\MatrixFunctions\MatrixFunctions.cpp">
       <Filter>Utitlity\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Drawables\Line\Line.cpp">
+      <Filter>OpenGL\Drawables\Line</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -188,5 +197,19 @@
     <ClInclude Include="include\MatrixFunctions.h">
       <Filter>Utitlity\Math</Filter>
     </ClInclude>
+    <ClInclude Include="include\GLIncludes.h">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LoggingUtils.h">
+      <Filter>Utitlity\Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Line.h">
+      <Filter>OpenGL\Drawables\Line</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="CudaMatrixFunctions.cu">
+      <Filter>Utitlity\Math</Filter>
+    </CudaCompile>
   </ItemGroup>
 </Project>

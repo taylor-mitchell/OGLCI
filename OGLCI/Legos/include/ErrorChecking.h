@@ -1,6 +1,6 @@
 #pragma once
 
-#include <GL/glew.h>
+#include "GLIncludes.h"
 #include <string>
 #include <sstream>
 
@@ -54,7 +54,7 @@ static bool GLCheckError(const char* function, const char* file, int line)
 {
     while (GLenum error = glGetError())
     {
-        ERRORLOC("OpenGL Error - " + GetErrorString(error), function, file, line);
+        ERRORLOC_LOG("OpenGL Error - " + GetErrorString(error), function, file, line);
         return false;
     }
     return true;

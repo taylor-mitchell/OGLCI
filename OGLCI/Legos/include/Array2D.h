@@ -1,6 +1,8 @@
 #pragma once
 #include <vector>
-
+#include <algorithm>
+#include <iterator>
+#include "LoggingUtils.h"
 
 //Row major
 
@@ -8,14 +10,17 @@ template <class T>
 class Array2D
 {
 private:
-	std::vector<std::vector<T>> m_data;
+	T* m_data;
 	unsigned int m_width;
 	unsigned int m_height;
 
 public:
-	Array2D() :m_data(), m_width(0), m_height(0) {};
-	Array2D(unsigned int m_width, unsigned int m_height);
+	Array2D() :m_data(nullptr), m_width(0), m_height(0) {};
+	Array2D(unsigned int width, unsigned int height);
+	Array2D(unsigned int width, unsigned int height, T* data) : m_width(width), m_height(height), m_data(data) {};
 	Array2D(const std::vector<std::vector<T>> data);
+	Array2D(const Array2D<T>& rhs);
+	~Array2D();
 
 	Array2D<T> operator=(const Array2D<T>& rhs);
 	Array2D<T> operator=(const std::vector<std::vector<T>>& data);
@@ -23,41 +28,69 @@ public:
 
 	bool set(unsigned int x, unsigned int y, const T& value);
 	void setAndResize(unsigned int x, unsigned int y, const T& value);
-	void setAll(const T& value);
+	void setAll(T value);
 	void swapRows(unsigned int r1, unsigned int r2);
 	void swapColumns(unsigned int c1, unsigned int c2);
 	void setSize(unsigned int x, unsigned int y);
-	void transpose();
+	void setData(unsigned int width, unsigned int height, T* data);
+
+	std::string logString();
 
 	T& operator()(unsigned int x, unsigned int y);
 
 	inline unsigned int getWidth() const { return m_width; };
 	inline unsigned int getHeight() const { return m_height; };
+	inline T* getData() { return m_data; };
 
 };
 
 template<class T>
 Array2D<T>::Array2D(unsigned int width, unsigned int height)
-	:m_data(),
+	:m_data(nullptr),
 	m_width(width),
 	m_height(height)
 {
-	m_data.resize(height);
-	for (int i = 0; i < height; ++i)
-	{
-		m_data[i].resize(width);
-	}
+	m_data = new T[height * width];
 }
 
 template<class T>
 inline Array2D<T>::Array2D(const std::vector<std::vector<T>> data)
+	:m_data(nullptr)
 {
-	m_height = data.size();
+	m_height = static_cast<unsigned int>(data.size());
 	if (m_height > 0)
 	{
-		m_width = data[0].size();
+		m_width = static_cast<unsigned int>(data[0].size());
 	}
-	m_data = data;
+
+	if (m_width > 0 && m_height > 0)
+	{
+		m_data = new T[m_height * m_width];
+
+		for (unsigned int i = 0; i < m_height; ++i)
+		{
+			memcpy(&m_data[i * m_width], data[i].data(), sizeof(T) * m_width);
+		}
+	}
+}
+
+template<class T>
+inline Array2D<T>::Array2D(const Array2D<T>& rhs)
+{
+	m_height = rhs.m_height;
+	m_width = rhs.m_width;
+
+	m_data = new T[m_height * m_width];
+	memcpy(m_data, rhs.m_data, sizeof(T) * m_height * m_width);
+}
+
+template<class T>
+inline Array2D<T>::~Array2D()
+{
+	if (m_data)
+	{
+		delete[] m_data;
+	}
 }
 
 template<class T>
@@ -65,7 +98,15 @@ inline Array2D<T> Array2D<T>::operator=(const Array2D<T>& rhs)
 {
 	m_height = rhs.m_height;
 	m_width = rhs.m_width;
-	m_data = rhs.m_data;
+
+	if (m_data)
+	{
+		delete[] m_data;
+	}
+
+	m_data = new T[m_height * m_width];
+	memcpy(m_data, rhs.m_data, sizeof(T) * m_height * m_width);
+
 	return *this;
 }
 
@@ -77,7 +118,23 @@ inline Array2D<T> Array2D<T>::operator=(const std::vector<std::vector<T>>& data)
 	{
 		m_width = data[0].size();
 	}
-	m_data = data;
+
+	if (m_width > 0 && m_height > 0)
+	{
+		if (m_data)
+		{
+			delete[] m_data;
+		}
+
+		m_data = new T[m_height * m_width];
+
+		for (int i = 0; i < m_height; ++i)
+		{
+			std::copy(data[i].begin(), data[i].end(), std::begin(&m_data[i * m_width]));
+			//memcpy(m_data + i * m_width * sizeof(T), data[i].data(), sizeof(T) * m_width);
+		}
+	}
+	
 
 	return *this;
 }
@@ -85,7 +142,14 @@ inline Array2D<T> Array2D<T>::operator=(const std::vector<std::vector<T>>& data)
 template<class T>
 inline bool Array2D<T>::operator==(const Array2D<T>& rhs) const
 {
-	return m_data == rhs.m_data;
+	for (int i = 0; i < m_width * m_height; ++i)
+	{
+		if (m_data[i] != rhs.m_data[i])
+		{
+			return false;
+		}
+	}
+	return true;
 }
 
 
@@ -98,7 +162,7 @@ bool Array2D<T>::set(unsigned int x, unsigned int y, const T& value)
 		return false;
 	}
 
-	m_data[y][x] = value;
+	m_data[y * m_width + x] = value;
 	return true;
 }
 
@@ -111,93 +175,146 @@ void Array2D<T>::setAndResize(unsigned int x, unsigned int y, const T& value)
 }
 
 template<class T>
-void Array2D<T>::setAll(const T& value)
+void Array2D<T>::setAll(T value)
 {
-	for (int i = 0; i < m_width; ++i)
+	for (unsigned int i = 0; i < m_width * m_height; ++i)
 	{
-		for (int j = 0; j < m_height; ++j)
-		{
-			set(i, j, value);
-		}
+		m_data[i] = value;
 	}
 }
 
 template<class T>
 void Array2D<T>::swapRows(unsigned int r1, unsigned int r2)
 {
-	std::vector<T> temp = m_data[r1];
-	m_data[r1] = m_data[r2];
-	m_data[r2] = temp;
+	T* temp = new T[m_width];
+	memcpy(temp, &m_data[r1 * m_width], sizeof(T) * m_width);
+	memcpy(&m_data[r1 * m_width], &m_data[r2 * m_width], sizeof(T) * m_width);
+	memcpy(&m_data[r2 * m_width], temp, sizeof(T) * m_width);
+	delete[] temp;
 }
 
 template<class T>
 inline void Array2D<T>::swapColumns(unsigned int c1, unsigned int c2)
 {
-	for (int i = 0; i < m_height; ++i)
+	for (unsigned int i = 0; i < m_height; ++i)
 	{
-		T temp = m_data[i][c1];
-		m_data[i][c1] = m_data[i][c2];
-		m_data[i][c2] = temp;
-		m_data[i][c2] = temp;
+		T temp = m_data[i * m_width + c1];
+		m_data[i * m_width + c1] = m_data[i * m_width + c2];
+		m_data[i * m_width + c2] = temp;
 	}
 }
 
 template<class T>
 inline void Array2D<T>::setSize(unsigned int x, unsigned int y)
 {
-	
-	if (x != m_width)
+	if (x != m_width || y != m_height)
 	{		
-		m_width = x;
-		for (int i = 0; i < m_height; ++i)
+		T* newData = new T[y * x];
+		if (m_height != y && m_width == x)
 		{
-			m_data[i].resize(m_width);
+			m_height = y;
+			memcpy(newData, m_data, sizeof(T) * m_height * m_width);
 		}
-	}
-
-	if (y != m_height)
-	{
-		m_height = y;
-		m_data.resize(y);
-		for (int i = 0; i < y; ++i)
+		else if (m_height == y && m_width != x)
 		{
-			m_data[i].resize(m_width);
+			if (x > m_width)
+			{
+				for (unsigned int i = 0; i < m_height; ++i)
+				{				
+					memcpy(&newData[i * x], &m_data[i * m_width], sizeof(T) * m_height * m_width);				
+				}
+			}
+			else
+			{
+				for (unsigned int i = 0; i < m_height; ++i)
+				{
+					memcpy(&newData[i * x], &m_data[i * m_width], sizeof(T) * m_height * x);
+				}
+			}
+			m_width = x;
 		}
-	}
+		else
+		{
+			if (y > m_height)
+			{
+				if (x > m_width)
+				{
+					for (unsigned int i = 0; i < m_height; ++i)
+					{
+						memcpy(&newData[i * x], &m_data[i * m_width], sizeof(T) * m_height * m_width);
+					}
+				}
+				else
+				{
+					for (unsigned int i = 0; i < m_height; ++i)
+					{
+						memcpy(&newData[i * x], &m_data[i * m_width], sizeof(T) * m_height * x);
+					}
+				}
+			}
+			else
+			{
+				if (x > m_width)
+				{
+					for (unsigned int i = 0; i < y; ++i)
+					{
+						memcpy(&newData[i * x], &m_data[i * m_width], sizeof(T) * m_height * m_width);
+					}
+				}
+				else
+				{
+					for (unsigned int i = 0; i < y; ++i)
+					{
+						memcpy(&newData[i * x], &m_data[i * m_width], sizeof(T) * m_height * x);
+					}
+				}
+			}
+			m_width = x;
+			m_height = y;
+		}
+		delete[] m_data;
+		m_data = newData;
+	}	
 }
 
 template<class T>
-inline void Array2D<T>::transpose()
+inline void Array2D<T>::setData(unsigned int width, unsigned int height, T* data)
 {
-	std::vector<std::vector<T>> newData;
-	newData.resize(m_width);
-	for (int i = 0; i < m_width; ++i)
+	m_width = width;
+	m_height = height;
+	if (m_data)
 	{
-		newData[i].resize(m_height);
+		delete[] m_data;
 	}
+	m_data = data;
+}
 
-	for (int i = 0; i < m_height; ++i)
+template<class T>
+inline std::string Array2D<T>::logString()
+{
+	std::string toReturn = "\n";
+
+	for (unsigned int i = 0; i < m_height; ++i)
 	{
-		for (int j = 0; j < m_width; ++j)
+		for (unsigned int j = 0; j < m_width; ++j)
 		{
-			newData[j][i] = m_data[i][j];
+			toReturn += logger::to_string<T>(m_data[i * m_width + j]) + " ";
 		}
+		toReturn += "\n";
 	}
-
-	m_width = m_height;
-	m_height = newData.size();
-	m_data = newData;
+	return toReturn;
 }
 
 template<class T>
 T& Array2D<T>::operator()(unsigned int x, unsigned int y)
 {
+	//may need to throw something here but i dont understand throws enough :(
 	/*if (x >= m_width || y >= m_height)
 	{
-		return NULL;
+		throw Exc
 	}*/
 
-	return m_data[y][x];
+	return m_data[y * m_width + x];
 }
 
 
