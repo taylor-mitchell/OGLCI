@@ -11,7 +11,6 @@
     x;\
     DEBUG_ASSERT(GLCheckError(#x, __FILE__, __LINE__))
 
-//should use map here
 static std::string GetErrorString(GLenum error)
 {
     std::string toReturn;

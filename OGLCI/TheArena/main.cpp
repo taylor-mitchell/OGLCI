@@ -46,7 +46,7 @@ int main(void)
     GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
     GLCall(glEnable(GL_BLEND));
     {
-        drawLineTest(&window);
+        //drawLineTest(&window);
         INFO_LOG("shutting down");
     }
     glfwTerminate();

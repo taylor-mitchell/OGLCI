@@ -87,9 +87,11 @@
   <ItemGroup>
     <ClCompile Include="FluidGrid.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MLP.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FluidGrid.h" />
+    <ClInclude Include="MLP.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

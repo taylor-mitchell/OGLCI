@@ -151,7 +151,7 @@ void FluidGrid::update()
 {
 	//interpolateParticles();
 	calculateSpatialDerivatives();
-	calculateDensity();
+	//calculateDensity();
 	calculatePressure();
 	calculateVelocity();
 	//extrapolateParticles();

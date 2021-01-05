@@ -15,6 +15,11 @@ private:
 	unsigned int m_height;
 
 public:
+	typedef T* iterator;
+	typedef const T* const_iterator;
+	iterator begin() { return &m_data[0]; };
+	iterator end() { return &m_data[m_width * m_height]; };
+
 	Array2D() :m_data(nullptr), m_width(0), m_height(0) {};
 	Array2D(unsigned int width, unsigned int height);
 	Array2D(unsigned int width, unsigned int height, T* data) : m_width(width), m_height(height), m_data(data) {};
@@ -24,6 +29,7 @@ public:
 
 	Array2D<T> operator=(const Array2D<T>& rhs);
 	Array2D<T> operator=(const std::vector<std::vector<T>>& data);
+	Array2D<T> operator=(const std::vector<T>& data);
 	bool operator==(const Array2D<T>& rhs) const;
 
 	bool set(unsigned int x, unsigned int y, const T& value);
@@ -33,6 +39,7 @@ public:
 	void swapColumns(unsigned int c1, unsigned int c2);
 	void setSize(unsigned int x, unsigned int y);
 	void setData(unsigned int width, unsigned int height, T* data);
+	void setData(unsigned int width, unsigned int height, std::vector<T>& data);
 
 	std::string logString();
 
@@ -41,6 +48,11 @@ public:
 	inline unsigned int getWidth() const { return m_width; };
 	inline unsigned int getHeight() const { return m_height; };
 	inline T* getData() { return m_data; };
+
+	//should change getRow to return Array2D
+	std::vector<T> getRow(unsigned int r);
+	Array2D<T> getColumn(unsigned int c);
+	void transpose();
 
 };
 
@@ -142,6 +154,11 @@ inline Array2D<T> Array2D<T>::operator=(const std::vector<std::vector<T>>& data)
 template<class T>
 inline bool Array2D<T>::operator==(const Array2D<T>& rhs) const
 {
+	if (m_width != rhs.m_width || m_height != rhs.m_height)
+	{
+		return false;
+	}
+
 	for (int i = 0; i < m_width * m_height; ++i)
 	{
 		if (m_data[i] != rhs.m_data[i])
@@ -208,17 +225,22 @@ template<class T>
 inline void Array2D<T>::setSize(unsigned int x, unsigned int y)
 {
 	if (x != m_width || y != m_height)
-	{		
+	{
+		//def need to reallocate
 		T* newData = new T[y * x];
 		if (m_height != y && m_width == x)
 		{
+			//messing with rows
+			//if new height is smaller, memcpy will truncate data for me
 			m_height = y;
 			memcpy(newData, m_data, sizeof(T) * m_height * m_width);
 		}
 		else if (m_height == y && m_width != x)
 		{
+			//messing with columns
 			if (x > m_width)
 			{
+				//adding columns
 				for (unsigned int i = 0; i < m_height; ++i)
 				{				
 					memcpy(&newData[i * x], &m_data[i * m_width], sizeof(T) * m_height * m_width);				
@@ -226,6 +248,7 @@ inline void Array2D<T>::setSize(unsigned int x, unsigned int y)
 			}
 			else
 			{
+				//removing columns
 				for (unsigned int i = 0; i < m_height; ++i)
 				{
 					memcpy(&newData[i * x], &m_data[i * m_width], sizeof(T) * m_height * x);
@@ -235,6 +258,7 @@ inline void Array2D<T>::setSize(unsigned int x, unsigned int y)
 		}
 		else
 		{
+			//messing with rows and columns
 			if (y > m_height)
 			{
 				if (x > m_width)
@@ -290,6 +314,30 @@ inline void Array2D<T>::setData(unsigned int width, unsigned int height, T* data
 }
 
 template<class T>
+inline void Array2D<T>::setData(unsigned int width, unsigned int height, std::vector<T>& data)
+{
+	if (width * height != data.size())
+	{
+		return;
+	}
+
+	m_width = width;
+	m_height = height;
+	if (m_data)
+	{
+		delete[] m_data;
+	}
+
+	m_data = new T[m_width * m_height];
+
+	//maybe play around with using memcpy here.  i am not sure if it would cause problems because the vector could reallocate outside of this function?
+	for (int i = 0; i < m_width * m_height; ++i)
+	{
+		m_data[i] = data[i];
+	}
+}
+
+template<class T>
 inline std::string Array2D<T>::logString()
 {
 	std::string toReturn = "\n";
@@ -298,7 +346,7 @@ inline std::string Array2D<T>::logString()
 	{
 		for (unsigned int j = 0; j < m_width; ++j)
 		{
-			toReturn += logger::to_string<T>(m_data[i * m_width + j]) + " ";
+			toReturn += logger::to_string< >(m_data[i * m_width + j]) + " ";
 		}
 		toReturn += "\n";
 	}
@@ -315,6 +363,47 @@ T& Array2D<T>::operator()(unsigned int x, unsigned int y)
 	}*/
 
 	return m_data[y * m_width + x];
+}
+
+template<class T>
+inline std::vector<T> Array2D<T>::getRow(unsigned int r)
+{
+	std::vector<T> toReturn(m_data + (r * m_width), m_data + ((r + 1) * m_width));
+	return toReturn;
+}
+
+template<class T>
+inline Array2D<T> Array2D<T>::getColumn(unsigned int c)
+{
+	Array2D<T> toReturn(1, m_height);
+
+	for (int j = 0; j < m_height; ++j)
+	{
+		toReturn(1, j) = m_data[j * m_width + c];
+	}
+
+	return toReturn;
+}
+
+template<class T>
+inline void Array2D<T>::transpose()
+{
+	if (m_data)
+	{
+		T* tempData = new T[m_height * m_width];
+		for (int j = 0; j < m_height; ++j)
+		{
+			for (int i = j; i < m_width; ++i)
+			{
+				tempData[i * m_height + j] = m_data[j * m_width + i];
+			}
+		}
+		delete[] m_data;
+		m_data = tempData;
+	}
+	unsigned int temp = m_width;
+	m_width = m_height;
+	m_height = temp;
 }
 
 

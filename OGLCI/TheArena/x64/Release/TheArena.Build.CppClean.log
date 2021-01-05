@@ -1,4 +1,5 @@
 c:\development\oglci\oglci\thearena\x64\release\vc142.pdb
+c:\development\oglci\oglci\thearena\x64\release\mlp.obj
 c:\development\oglci\oglci\thearena\x64\release\main.obj
 c:\development\oglci\oglci\thearena\x64\release\fluidgrid.obj
 c:\development\oglci\oglci\x64\release\thearena.exe
@@ -7,13 +8,9 @@ c:\development\oglci\oglci\x64\release\thearena.lib
 c:\development\oglci\oglci\x64\release\thearena.exp
 c:\development\oglci\oglci\x64\release\thearena.ipdb
 c:\development\oglci\oglci\x64\release\thearena.iobj
-c:\development\oglci\oglci\thearena\x64\release\kernel.cu.cache
-c:\development\oglci\oglci\thearena\x64\release\kernel.cu.obj
 c:\development\oglci\oglci\thearena\x64\release\thearena.tlog\cl.command.1.tlog
 c:\development\oglci\oglci\thearena\x64\release\thearena.tlog\cl.read.1.tlog
 c:\development\oglci\oglci\thearena\x64\release\thearena.tlog\cl.write.1.tlog
-c:\development\oglci\oglci\thearena\x64\release\thearena.tlog\cudacompile.read.1u.tlog
-c:\development\oglci\oglci\thearena\x64\release\thearena.tlog\cudacompile.write.1u.tlog
 c:\development\oglci\oglci\thearena\x64\release\thearena.tlog\link.command.1.tlog
 c:\development\oglci\oglci\thearena\x64\release\thearena.tlog\link.read.1.tlog
 c:\development\oglci\oglci\thearena\x64\release\thearena.tlog\link.write.1.tlog

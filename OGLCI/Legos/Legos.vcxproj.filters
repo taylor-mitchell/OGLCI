@@ -82,6 +82,15 @@
     <Filter Include="OpenGL\Drawables\Line">
       <UniqueIdentifier>{3acb1747-420e-4b3e-b991-c84be376539f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utitlity\System">
+      <UniqueIdentifier>{443c0edf-5919-48f1-9982-6a3107d54f4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utitlity\UI">
+      <UniqueIdentifier>{c534cee5-f486-45f1-8cd7-c308fe8c55e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utitlity\UI\Table">
+      <UniqueIdentifier>{2f59aaec-76e7-415c-8100-c677d4e544f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InteropClasses\Buffers\Buffer.cpp">
@@ -131,6 +140,9 @@
     </ClCompile>
     <ClCompile Include="OpenGL\Drawables\Line\Line.cpp">
       <Filter>OpenGL\Drawables\Line</Filter>
+    </ClCompile>
+    <ClCompile Include="CudaBuffers.cpp">
+      <Filter>Cuda</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -206,9 +218,21 @@
     <ClInclude Include="include\Line.h">
       <Filter>OpenGL\Drawables\Line</Filter>
     </ClInclude>
+    <ClInclude Include="include\WindowsInfo.h">
+      <Filter>Utitlity\System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SystemHelper.h">
+      <Filter>Utitlity\System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GPUInfo.h">
+      <Filter>Utitlity\System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Table.h">
+      <Filter>Utitlity\UI\Table</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CudaCompile Include="CudaMatrixFunctions.cu">
+    <CudaCompile Include="include\CudaMatrixFunctions.cu">
       <Filter>Utitlity\Math</Filter>
     </CudaCompile>
   </ItemGroup>

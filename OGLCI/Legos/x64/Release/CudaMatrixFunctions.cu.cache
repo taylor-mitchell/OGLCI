@@ -1,4 +1,4 @@
-Identity=CudaMatrixFunctions.cu
+Identity=include\CudaMatrixFunctions.cu
 AdditionalCompilerOptions=
 AdditionalCompilerOptions=
 AdditionalDependencies=

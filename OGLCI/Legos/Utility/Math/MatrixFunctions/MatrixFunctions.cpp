@@ -1,9 +1,13 @@
 #include "MatrixFunctions.h"
 #include "Logger.h"
+#include "SystemHelper.h"
+#include "GPUInfo.h"
 
-extern bool cudaMultiply(Array2D<float>& left, Array2D<float>& right, Array2D<float>& result);
+extern void launchMultiplyKernel(dim3 threadsPerBlock, dim3 blocksPerGrid, /*int valueColsPerThread, int valueRowsPerThread, */int resultWidth, int resultHeight, int leftWidth, float* dev_left, float* dev_right, float* dev_result);
+
 namespace Matrix
 {
+	
 	Array2D<float> identity(unsigned int n)
 	{
 		Array2D<float> toReturn(n, n);
@@ -121,12 +125,12 @@ namespace Matrix
 	}
 
 	void multiply(Array2D<float>& leftMatrix, Array2D<float>& rightMatrix, Array2D<float>& result)
-	{		
+	{
 		if (leftMatrix.getWidth() != rightMatrix.getHeight())
 		{
 			return;
 		}
-
+			
 		result.setSize(rightMatrix.getWidth(), leftMatrix.getHeight());
 		result.setAll(0.0f);
 
@@ -143,6 +147,145 @@ namespace Matrix
 			}
 		}
 	}
+
+	void cfMultiply(Array2D<float>& leftMatrix, Array2D<float>& rightMatrix, int cacheSizeBytes, Array2D<float>& result)
+	{
+		if (leftMatrix.getWidth() != rightMatrix.getHeight())
+		{
+			return;
+		}
+
+		result.setSize(rightMatrix.getWidth(), leftMatrix.getHeight());
+		result.setAll(0.0f);
+
+		int stepSize = std::sqrt((cacheSizeBytes / sizeof(float)));
+		for (unsigned int I = 0; I < leftMatrix.getHeight(); I += stepSize)
+		{
+			for (unsigned int J = 0; J < rightMatrix.getWidth(); J += stepSize)
+			{
+				for (unsigned int K = 0; K < leftMatrix.getWidth(); K += stepSize)
+				{
+					for (unsigned int i = I; i < std::min(I + stepSize, leftMatrix.getHeight()); ++i)
+					{
+						for (unsigned int j = J; j < std::min(J + stepSize, rightMatrix.getWidth()); ++j)
+						{
+							float total = 0.0f;
+							for (unsigned int k = K; k < std::min(K + stepSize, leftMatrix.getWidth()); ++k)
+							{
+								total += leftMatrix(k, i) * rightMatrix(j, k);
+							}
+							result(j, i) += total;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	void fastMultiply(Array2D<float>& leftMatrix, Array2D<float>& rightMatrix, Array2D<float>& result)
+	{
+#if defined USE_CUDA
+		cudaMultiply(leftMatrix, rightMatrix, result);
+#else
+		//i will implement Strassen algorithm someday but it doesn't seem greatly useful in that many situations
+		int cacheSizeBytes = cacheSize(1);
+		int cacheLineSizeBytes = cacheLineSize(1);
+		int totalCacheLines = cacheSizeBytes / cacheLineSizeBytes;
+
+		if (cacheSizeBytes != 0 && leftMatrix.getHeight() * sizeof(float) > totalCacheLines)
+		{
+			//can optimize it for cache size
+			cfMultiply(leftMatrix, rightMatrix, cacheSizeBytes, result);
+		}
+		else
+		{
+			//cant optimize it without knowing cache info
+			multiply(leftMatrix, rightMatrix, result);
+		}
+#endif
+	}
+
+	bool cudaMultiply(Array2D<float>& left, Array2D<float>& right, Array2D<float>& result)
+	{
+		float* dev_left;
+		float* dev_right;
+		float* dev_result;
+		int resultWidth = right.getWidth();
+		int resultHeight = left.getHeight();
+
+		float* cpu_result = new float[resultWidth * resultHeight];
+
+		cudaDeviceProp gpuProps = getGPUProperties(0);
+
+		//not going to worry about results that are bigger than number of threads for no
+		//int valueRowsPerThread;
+		//int valueColsPerThread;
+		dim3 threadsPerBlock;
+		dim3 blocksPerGrid;
+		float dimProportion = (float)resultWidth / (float)resultHeight;
+
+		/*
+		if (resultWidth * resultHeight > gpuProps.maxThreadsPerBlock * gpuProps.maxGridSize[0] * gpuProps.maxGridSize[1])
+		{
+
+		}
+		else if (resultWidth * resultHeight > gpuProps.maxThreadsPerBlock)
+		{
+			threadsPerBlock.x = std::sqrt((float)gpuProps.maxThreadsPerBlock * dimProportion);
+			threadsPerBlock.y = (float)gpuProps.maxThreadsPerBlock / threadsPerBlock.x;
+			blocksPerGrid.x = ceil((float)resultWidth / (float)threadsPerBlock.x);
+			blocksPerGrid.y = ceil((float)resultHeight / (float)threadsPerBlock.y);
+		}*/
+		
+		threadsPerBlock.x = fmin(fmax(1.0f, std::sqrt((float)gpuProps.maxThreadsPerBlock * dimProportion)), resultWidth);
+		threadsPerBlock.y = fmin(fmax(1.0f, (float)gpuProps.maxThreadsPerBlock / threadsPerBlock.x), resultHeight);
+		blocksPerGrid.x = fmin(gpuProps.maxGridSize[0], (float)resultWidth / (float)threadsPerBlock.x);
+		blocksPerGrid.y = fmin(gpuProps.maxGridSize[1], (float)resultHeight / (float)threadsPerBlock.y);
+		//valueColsPerThread = fmax(1.0f, (float)resultWidth / ((float)threadsPerBlock.x * (float)blocksPerGrid.x));
+		//valueRowsPerThread = fmax(1.0f, (float)resultHeight / ((float)threadsPerBlock.y * (float)blocksPerGrid.y));
+
+		cudaCall(cudaSetDevice(0));
+		cudaCall(cudaMalloc((void**)&dev_left, resultWidth * resultHeight * sizeof(float)));
+		cudaCall(cudaMalloc((void**)&dev_right, resultWidth * resultHeight * sizeof(float)));
+		cudaCall(cudaMalloc((void**)&dev_result, resultWidth * resultHeight * sizeof(float)));
+
+		cudaCall(cudaMemcpy(dev_left, left.getData(), resultWidth * resultHeight * sizeof(float), cudaMemcpyHostToDevice));
+		cudaCall(cudaMemcpy(dev_right, right.getData(), resultWidth * resultHeight * sizeof(float), cudaMemcpyHostToDevice));
+
+		//maybe this should return cuda error and be wrapped in a cudaCall?
+		launchMultiplyKernel(blocksPerGrid, threadsPerBlock, /*valueColsPerThread, valueRowsPerThread,*/ resultWidth, resultHeight, left.getWidth(), dev_left, dev_right, dev_result);
+
+		cudaCall(cudaGetLastError());
+		cudaCall(cudaDeviceSynchronize());
+		cudaCall(cudaMemcpy(cpu_result, dev_result, resultWidth * resultHeight * sizeof(float), cudaMemcpyDeviceToHost));
+
+		cudaFree(dev_left);
+		cudaFree(dev_right);
+		cudaFree(dev_result);
+
+		result.setData(resultWidth, resultHeight, cpu_result);
+		return true;
+	}
+
+	void add(Array2D<float>& leftMatrix, Array2D<float>& rightMatrix, Array2D<float>& result)
+	{
+		if (leftMatrix.getWidth() != rightMatrix.getWidth() || leftMatrix.getHeight() != rightMatrix.getHeight())
+		{
+			return;
+		}
+
+		result.setSize(leftMatrix.getWidth(), leftMatrix.getHeight());
+		result.setAll(0.0f);
+
+		for (unsigned int i = 0; i < leftMatrix.getHeight(); ++i)
+		{
+			for (unsigned int j = 0; j < leftMatrix.getWidth(); ++j)
+			{
+				result(j, i) = leftMatrix(j, i) + rightMatrix(j, i);
+			}
+		}
+	}
+
 	Array2D<glm::vec4> gradient(Array2D<glm::vec2> arr)
 	{
 		Array2D<glm::vec4> toReturn(arr.getWidth(), arr.getHeight());
@@ -172,6 +315,62 @@ namespace Matrix
 			}
 		}
 		return toReturn;
+	}
+
+	float distance1(Array2D<float>& leftMatrix, Array2D<float>& rightMatrix)
+	{
+		if (leftMatrix.getWidth() != rightMatrix.getWidth() && leftMatrix.getHeight() != rightMatrix.getHeight())
+		{
+			return -1.0f;
+		}
+
+		float toReturn = 0.0f;
+
+		for (int i = 0; i < leftMatrix.getWidth(); ++i)
+		{
+			float current = 0.0f;
+			for (int j = 0; j < leftMatrix.getHeight(); ++j)
+			{
+				current += std::fabs(leftMatrix(i, j) - rightMatrix(i, j));
+			}
+			toReturn = fmax(toReturn, current);
+		}
+		return toReturn;
+	}
+
+	float norm1(Array2D<float>& matrix)
+	{
+		float toReturn = 0.0f;
+
+		for (int i = 0; i < matrix.getWidth(); ++i)
+		{
+			float current = 0.0f;
+			for (int j = 0; j < matrix.getHeight(); ++j)
+			{
+				current += std::fabs(matrix(i, j));
+			}
+			toReturn = fmax(toReturn, current);
+		}
+		return toReturn;
+	}
+
+	float compare(Array2D<float>& leftMatrix, Array2D<float>& rightMatrix)
+	{
+		if (leftMatrix.getWidth() != rightMatrix.getWidth() && leftMatrix.getHeight() != rightMatrix.getHeight())
+		{
+			return -1.0f;
+		}
+
+		float toReturn = 0.0f;
+
+		for (int i = 0; i < leftMatrix.getWidth(); ++i)
+		{
+			for (int j = 0; j < leftMatrix.getHeight(); ++j)
+			{
+				toReturn += std::fabs((leftMatrix(i, j) - rightMatrix(i, j)) / leftMatrix(i, j));
+			}
+		}
+		return toReturn / (leftMatrix.getWidth() * leftMatrix.getHeight());
 	}
 
 	/*

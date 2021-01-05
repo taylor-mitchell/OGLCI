@@ -111,6 +111,7 @@
     <ClInclude Include="include\Drawable.h" />
     <ClInclude Include="include\ErrorChecking.h" />
     <ClInclude Include="include\GLIncludes.h" />
+    <ClInclude Include="include\GPUInfo.h" />
     <ClInclude Include="include\Grid.h" />
     <ClInclude Include="include\IndexBuffer.h" />
     <ClInclude Include="include\Line.h" />
@@ -121,14 +122,18 @@
     <ClInclude Include="include\Shader.h" />
     <ClInclude Include="include\ShaderFactory.h" />
     <ClInclude Include="include\Structures.h" />
+    <ClInclude Include="include\SystemHelper.h" />
+    <ClInclude Include="include\Table.h" />
     <ClInclude Include="include\Texture.h" />
     <ClInclude Include="include\Transform.h" />
     <ClInclude Include="include\VertexArray.h" />
     <ClInclude Include="include\VertexBuffer.h" />
     <ClInclude Include="include\VertexBufferLayout.h" />
     <ClInclude Include="include\Window.h" />
+    <ClInclude Include="include\WindowsInfo.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CudaBuffers.cpp" />
     <ClCompile Include="InteropClasses\Buffers\Buffer.cpp" />
     <ClCompile Include="OpenGL\Buffers\IndexBuffer\IndexBuffer.cpp" />
     <ClCompile Include="OpenGL\Buffers\VertexArray\VertexArray.cpp" />
@@ -147,7 +152,7 @@
     <ClCompile Include="Utility\Math\MatrixFunctions\MatrixFunctions.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <CudaCompile Include="CudaMatrixFunctions.cu" />
+    <CudaCompile Include="include\CudaMatrixFunctions.cu" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

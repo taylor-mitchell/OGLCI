@@ -7,6 +7,7 @@ c:\development\oglci\oglci\legos\x64\release\texture.obj
 c:\development\oglci\oglci\legos\x64\release\shaderfactory.obj
 c:\development\oglci\oglci\legos\x64\release\shader.obj
 c:\development\oglci\oglci\legos\x64\release\renderer.obj
+c:\development\oglci\oglci\legos\x64\release\line.obj
 c:\development\oglci\oglci\legos\x64\release\grid.obj
 c:\development\oglci\oglci\legos\x64\release\circle.obj
 c:\development\oglci\oglci\legos\x64\release\camera.obj
@@ -14,10 +15,17 @@ c:\development\oglci\oglci\legos\x64\release\vertexbuffer.obj
 c:\development\oglci\oglci\legos\x64\release\vertexarray.obj
 c:\development\oglci\oglci\legos\x64\release\indexbuffer.obj
 c:\development\oglci\oglci\legos\x64\release\buffer.obj
+c:\development\oglci\oglci\legos\x64\release\cudabuffers.obj
+x64\release\cudamatrixfunctions.cu.obj
 c:\development\oglci\oglci\x64\release\legos.lib
+c:\development\oglci\oglci\legos\x64\release\cudamatrixfunctions.cu.cache
+c:\development\oglci\oglci\legos\x64\release\cudamatrixfunctions.cu.obj
+c:\development\oglci\oglci\legos\x64\release\legos.device-link.obj
 c:\development\oglci\oglci\legos\x64\release\legos.tlog\cl.command.1.tlog
 c:\development\oglci\oglci\legos\x64\release\legos.tlog\cl.read.1.tlog
 c:\development\oglci\oglci\legos\x64\release\legos.tlog\cl.write.1.tlog
+c:\development\oglci\oglci\legos\x64\release\legos.tlog\cudacompile.read.1u.tlog
+c:\development\oglci\oglci\legos\x64\release\legos.tlog\cudacompile.write.1u.tlog
 c:\development\oglci\oglci\legos\x64\release\legos.tlog\lib-link.read.1.tlog
 c:\development\oglci\oglci\legos\x64\release\legos.tlog\lib-link.write.1.tlog
 c:\development\oglci\oglci\legos\x64\release\legos.tlog\lib.command.1.tlog
