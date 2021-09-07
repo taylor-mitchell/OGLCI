@@ -1,0 +1,6 @@
+\.vs/
+*.obj
+*.log
+*.tlog
+*.pdb
+OGLCI/x64/Release/Legos.lib

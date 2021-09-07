@@ -1,0 +1,320 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Interop">
+      <UniqueIdentifier>{b43239a6-8b18-4bb6-9acb-2819b8fe7687}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interop\Buffers">
+      <UniqueIdentifier>{baa3061c-12fc-49fd-8cce-8d5b6d5e6fe5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interop\Buffers\Buffer">
+      <UniqueIdentifier>{b6eb0f12-78d4-4f22-a630-764678716382}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL">
+      <UniqueIdentifier>{0faf03a8-e1b6-4038-b912-75738f3153e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Camera">
+      <UniqueIdentifier>{ac216108-da6e-4f49-b261-0021cc268b0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Shader">
+      <UniqueIdentifier>{7b70c8ea-999b-4f67-90f7-021d42c063de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Transform">
+      <UniqueIdentifier>{3ee3f67c-de31-413c-95d1-70ce263d08cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utitlity">
+      <UniqueIdentifier>{82f672d8-ec60-4906-a8d4-2524ba67b5d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utitlity\Logger">
+      <UniqueIdentifier>{243462cc-c3cd-44f3-ad72-78f11b7bc193}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Buffers">
+      <UniqueIdentifier>{99f8dd46-e41a-406b-81c6-e8aebd4099b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Renderer">
+      <UniqueIdentifier>{a9b1f5b0-7ad2-4fe9-828f-500319f62802}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\ErrorCheckers">
+      <UniqueIdentifier>{596b6841-e82b-4133-86b5-f8b832fe1254}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Buffers\VertexBuffer">
+      <UniqueIdentifier>{33f65ddf-a29b-4643-98ce-2cbbac41dd4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Buffers\IndexBuffer">
+      <UniqueIdentifier>{ac722b30-252d-4970-a3c2-4b9742ceddf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Buffers\VertexArray">
+      <UniqueIdentifier>{6e629bfd-8c16-4a92-ad6a-3e7e9c944cf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Buffers\VertexBufferLayout">
+      <UniqueIdentifier>{6b637cd5-e55f-4265-8b4b-ddc62e45965e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Texture">
+      <UniqueIdentifier>{db0937ca-4a47-4602-bdcf-dcb4bae6a2b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Window">
+      <UniqueIdentifier>{d73b348a-b897-47a0-a0bb-508ecd005ec8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Drawables">
+      <UniqueIdentifier>{b80ace1b-0175-4aef-95b9-0ef7044af4d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Drawables\Circle">
+      <UniqueIdentifier>{cad0dd41-3afe-4e49-a92c-2af679c4710a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Structures">
+      <UniqueIdentifier>{4126b9a2-67ed-4b60-bdbb-4cc0fceb6b10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Buffers\BatchBuffer">
+      <UniqueIdentifier>{2735dac9-76c3-4bca-90b4-d64fa10b9303}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cuda">
+      <UniqueIdentifier>{4624a9b5-b6c0-4534-aade-3bc97e34c799}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Drawables\Grid">
+      <UniqueIdentifier>{54f763b2-6fc8-4dd5-a73c-a7138848d261}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utitlity\Math">
+      <UniqueIdentifier>{767feb07-a4dd-474f-8327-58214baee664}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cuda\ErrorCheckers">
+      <UniqueIdentifier>{3df1a738-cd08-443b-8eb4-31872598f77b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Drawables\Line">
+      <UniqueIdentifier>{3acb1747-420e-4b3e-b991-c84be376539f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utitlity\System">
+      <UniqueIdentifier>{443c0edf-5919-48f1-9982-6a3107d54f4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utitlity\UI">
+      <UniqueIdentifier>{c534cee5-f486-45f1-8cd7-c308fe8c55e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utitlity\UI\Table">
+      <UniqueIdentifier>{2f59aaec-76e7-415c-8100-c677d4e544f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utitlity\File">
+      <UniqueIdentifier>{e5e1af2c-a8c5-4527-a9ec-440df1a9fb40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Drawables\PixelArray">
+      <UniqueIdentifier>{0bd8c1ae-65b0-4736-b77f-ad93712993fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Drawables\TextBox">
+      <UniqueIdentifier>{b5e9afcb-398e-4214-94d5-b4ee4b307d9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Font">
+      <UniqueIdentifier>{2b49fc65-e75b-4545-b61a-01d3060c2c3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utitlity\Stash">
+      <UniqueIdentifier>{5ce47dfc-c555-48c7-b30c-a94038e78003}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Drawables\Rectangle">
+      <UniqueIdentifier>{3e0da5aa-804c-4dad-8a71-914df73acc0d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="InteropClasses\Buffers\Buffer.cpp">
+      <Filter>Interop\Buffers\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Camera.cpp">
+      <Filter>OpenGL\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Shader\Shader.cpp">
+      <Filter>OpenGL\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Transform\Transform.cpp">
+      <Filter>OpenGL\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\Logger\Logger.cpp">
+      <Filter>Utitlity\Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Buffers\VertexBuffer\VertexBuffer.cpp">
+      <Filter>OpenGL\Buffers\VertexBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Buffers\IndexBuffer\IndexBuffer.cpp">
+      <Filter>OpenGL\Buffers\IndexBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Buffers\VertexArray\VertexArray.cpp">
+      <Filter>OpenGL\Buffers\VertexArray</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Renderer\Renderer.cpp">
+      <Filter>OpenGL\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Texture\Texture.cpp">
+      <Filter>OpenGL\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Window\Window.cpp">
+      <Filter>OpenGL\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Drawables\Circle\Circle.cpp">
+      <Filter>OpenGL\Drawables\Circle</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Shader\ShaderFactory.cpp">
+      <Filter>OpenGL\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Drawables\Grid\Grid.cpp">
+      <Filter>OpenGL\Drawables\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\Math\MatrixFunctions\MatrixFunctions.cpp">
+      <Filter>Utitlity\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Drawables\Line\Line.cpp">
+      <Filter>OpenGL\Drawables\Line</Filter>
+    </ClCompile>
+    <ClCompile Include="CudaBuffers.cpp">
+      <Filter>Cuda</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\System\WIndowsInfo.cpp">
+      <Filter>Utitlity\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\File\FileReader.cpp">
+      <Filter>Utitlity\File</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Texture\TextureFactory.cpp">
+      <Filter>OpenGL\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Drawables\PixelArray\PixelArray.cpp">
+      <Filter>OpenGL\Drawables\PixelArray</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Drawables\Square\Rectangle.cpp">
+      <Filter>OpenGL\Drawables\Rectangle</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Drawables\TextBox\TextBox.cpp">
+      <Filter>OpenGL\Drawables\TextBox</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Font\Font.cpp">
+      <Filter>OpenGL\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Font\FontFactory.cpp">
+      <Filter>OpenGL\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Renderer\RendererFactory.cpp">
+      <Filter>OpenGL\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Drawables\TextBox\Glyph.cpp">
+      <Filter>OpenGL\Drawables\TextBox</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Logger.h">
+      <Filter>Utitlity\Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Buffer.h">
+      <Filter>Interop\Buffers\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Camera.h">
+      <Filter>OpenGL\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Transform.h">
+      <Filter>OpenGL\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Shader.h">
+      <Filter>OpenGL\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ErrorChecking.h">
+      <Filter>OpenGL\ErrorCheckers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Renderer.h">
+      <Filter>OpenGL\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\VertexBuffer.h">
+      <Filter>OpenGL\Buffers\VertexBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IndexBuffer.h">
+      <Filter>OpenGL\Buffers\IndexBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\VertexArray.h">
+      <Filter>OpenGL\Buffers\VertexArray</Filter>
+    </ClInclude>
+    <ClInclude Include="include\VertexBufferLayout.h">
+      <Filter>OpenGL\Buffers\VertexBufferLayout</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Texture.h">
+      <Filter>OpenGL\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Window.h">
+      <Filter>OpenGL\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Drawable.h">
+      <Filter>OpenGL\Drawables</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Circle.h">
+      <Filter>OpenGL\Drawables\Circle</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ShaderFactory.h">
+      <Filter>OpenGL\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Structures.h">
+      <Filter>OpenGL\Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BatchBuffer.h">
+      <Filter>OpenGL\Buffers\BatchBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Grid.h">
+      <Filter>OpenGL\Drawables\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Array2D.h">
+      <Filter>Utitlity\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MatrixFunctions.h">
+      <Filter>Utitlity\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GLIncludes.h">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LoggingUtils.h">
+      <Filter>Utitlity\Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Line.h">
+      <Filter>OpenGL\Drawables\Line</Filter>
+    </ClInclude>
+    <ClInclude Include="include\WindowsInfo.h">
+      <Filter>Utitlity\System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SystemHelper.h">
+      <Filter>Utitlity\System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GPUInfo.h">
+      <Filter>Utitlity\System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Table.h">
+      <Filter>Utitlity\UI\Table</Filter>
+    </ClInclude>
+    <ClInclude Include="include\WavyArray2D.h">
+      <Filter>Utitlity\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FileReader.h">
+      <Filter>Utitlity\File</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TextureFactory.h">
+      <Filter>OpenGL\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PixelArray.h">
+      <Filter>OpenGL\Drawables\PixelArray</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Rectangle.h">
+      <Filter>OpenGL\Drawables\Rectangle</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TextBox.h">
+      <Filter>OpenGL\Drawables\TextBox</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FontFactory.h">
+      <Filter>OpenGL\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Font.h">
+      <Filter>OpenGL\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Stash.h">
+      <Filter>Utitlity\Stash</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RendererFactory.h">
+      <Filter>OpenGL\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Glyph.h">
+      <Filter>OpenGL\Drawables\TextBox</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="include\CudaMatrixFunctions.cu">
+      <Filter>Utitlity\Math</Filter>
+    </CudaCompile>
+  </ItemGroup>
+</Project>

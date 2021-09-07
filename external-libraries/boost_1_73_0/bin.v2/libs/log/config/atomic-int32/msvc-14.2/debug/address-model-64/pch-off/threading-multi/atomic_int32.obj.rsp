@@ -1,0 +1,7 @@
+"libs\log\config\atomic-int32\atomic_int32.cpp" -Fo"bin.v2\libs\log\config\atomic-int32\msvc-14.2\debug\address-model-64\pch-off\threading-multi\atomic_int32.obj"    -TP /Z7 /Od /Ob0 /W3 /GR /MDd /Zc:forScope /Zc:wchar_t /favor:blend /wd4675 /EHs -c 
+-DBOOST_ALL_NO_LIB=1 
+-DBOOST_USE_WINDOWS_H 
+-DNOMINMAX 
+-DSECURITY_WIN32 
+-DWIN32_LEAN_AND_MEAN 
+"-I."
